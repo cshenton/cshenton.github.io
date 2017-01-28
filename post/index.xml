@@ -7,8 +7,18 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>My Name</copyright>
-    <lastBuildDate>Sat, 28 Jan 2017 23:16:33 +1100</lastBuildDate>
+    <lastBuildDate>Sat, 28 Jan 2017 23:26:53 +1100</lastBuildDate>
     <atom:link href="https://cshenton.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>This is a title to see if github pages is updating the website</title>
+      <link>https://cshenton.github.io/2017/01/28/test-post-2/</link>
+      <pubDate>Sat, 28 Jan 2017 23:26:53 +1100</pubDate>
+      
+      <guid>https://cshenton.github.io/2017/01/28/test-post-2/</guid>
+      <description>&lt;p&gt;well is it?&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title></title>

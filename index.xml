@@ -2,50 +2,50 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Lean Data Guy</title>
-    <link>https://leandataguy.com/index.xml</link>
+    <link>http://leandataguy.com/index.xml</link>
     <description>Recent content on Lean Data Guy</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>My Name</copyright>
     <lastBuildDate>Sun, 29 Jan 2017 10:46:24 +1100</lastBuildDate>
-    <atom:link href="https://leandataguy.com/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://leandataguy.com/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title></title>
-      <link>https://leandataguy.com/2017/01/29/theme-trigger/</link>
+      <link>http://leandataguy.com/2017/01/29/theme-trigger/</link>
       <pubDate>Sun, 29 Jan 2017 10:46:24 +1100</pubDate>
       
-      <guid>https://leandataguy.com/2017/01/29/theme-trigger/</guid>
+      <guid>http://leandataguy.com/2017/01/29/theme-trigger/</guid>
       <description>&lt;p&gt;Hoping adding a new post will fix the theme displaying&lt;/p&gt;
 </description>
     </item>
     
     <item>
       <title>My Cool Title</title>
-      <link>https://leandataguy.com/2017/01/29/update-test/</link>
+      <link>http://leandataguy.com/2017/01/29/update-test/</link>
       <pubDate>Sun, 29 Jan 2017 10:41:11 +1100</pubDate>
       
-      <guid>https://leandataguy.com/2017/01/29/update-test/</guid>
+      <guid>http://leandataguy.com/2017/01/29/update-test/</guid>
       <description>&lt;p&gt;This is a test to see if changes get propagated on push&lt;/p&gt;
 </description>
     </item>
     
     <item>
       <title>This is a title to see if github pages is updating the website</title>
-      <link>https://leandataguy.com/2017/01/28/test-post-2/</link>
+      <link>http://leandataguy.com/2017/01/28/test-post-2/</link>
       <pubDate>Sat, 28 Jan 2017 23:26:53 +1100</pubDate>
       
-      <guid>https://leandataguy.com/2017/01/28/test-post-2/</guid>
+      <guid>http://leandataguy.com/2017/01/28/test-post-2/</guid>
       <description>&lt;p&gt;well is it?&lt;/p&gt;
 </description>
     </item>
     
     <item>
       <title></title>
-      <link>https://leandataguy.com/2017/01/28/test-post/</link>
+      <link>http://leandataguy.com/2017/01/28/test-post/</link>
       <pubDate>Sat, 28 Jan 2017 23:16:33 +1100</pubDate>
       
-      <guid>https://leandataguy.com/2017/01/28/test-post/</guid>
+      <guid>http://leandataguy.com/2017/01/28/test-post/</guid>
       <description>&lt;p&gt;this is my test post&lt;/p&gt;
 </description>
     </item>

@@ -7,8 +7,18 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>My Name</copyright>
-    <lastBuildDate>Sun, 29 Jan 2017 10:41:11 +1100</lastBuildDate>
+    <lastBuildDate>Sun, 29 Jan 2017 10:46:24 +1100</lastBuildDate>
     <atom:link href="https://leandataguy.com/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title></title>
+      <link>https://leandataguy.com/2017/01/29/theme-trigger/</link>
+      <pubDate>Sun, 29 Jan 2017 10:46:24 +1100</pubDate>
+      
+      <guid>https://leandataguy.com/2017/01/29/theme-trigger/</guid>
+      <description>&lt;p&gt;Hoping adding a new post will fix the theme displaying&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>My Cool Title</title>

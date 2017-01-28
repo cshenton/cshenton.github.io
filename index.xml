@@ -7,8 +7,18 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>My Name</copyright>
-    <lastBuildDate>Sat, 28 Jan 2017 23:26:53 +1100</lastBuildDate>
+    <lastBuildDate>Sun, 29 Jan 2017 10:41:11 +1100</lastBuildDate>
     <atom:link href="https://leandataguy.com/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>My Cool Title</title>
+      <link>https://leandataguy.com/2017/01/29/update-test/</link>
+      <pubDate>Sun, 29 Jan 2017 10:41:11 +1100</pubDate>
+      
+      <guid>https://leandataguy.com/2017/01/29/update-test/</guid>
+      <description>&lt;p&gt;This is a test to see if changes get propagated on push&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>This is a title to see if github pages is updating the website</title>

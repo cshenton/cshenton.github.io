@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Pages on Lean Data Guy</title>
+    <link>http://leandataguy.com/page/index.xml</link>
+    <description>Recent content in Pages on Lean Data Guy</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>My Name</copyright>
+    <lastBuildDate>Sun, 29 Jan 2017 18:45:25 +1100</lastBuildDate>
+    <atom:link href="http://leandataguy.com/page/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Contact Me</title>
+      <link>http://leandataguy.com/page/contact/</link>
+      <pubDate>Sun, 29 Jan 2017 18:45:25 +1100</pubDate>
+      
+      <guid>http://leandataguy.com/page/contact/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>About The Site</title>
+      <link>http://leandataguy.com/page/about/</link>
+      <pubDate>Sun, 29 Jan 2017 18:45:22 +1100</pubDate>
+      
+      <guid>http://leandataguy.com/page/about/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

@@ -7,46 +7,104 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>My Name</copyright>
-    <lastBuildDate>Sun, 29 Jan 2017 10:46:24 +1100</lastBuildDate>
+    <lastBuildDate>Sun, 29 Jan 2017 18:51:23 +1100</lastBuildDate>
     <atom:link href="http://leandataguy.com/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
-      <title></title>
-      <link>http://leandataguy.com/2017/01/29/theme-trigger/</link>
-      <pubDate>Sun, 29 Jan 2017 10:46:24 +1100</pubDate>
+      <title>Simpsons Synopsis Generator</title>
+      <link>http://leandataguy.com/project/simpson-generator/</link>
+      <pubDate>Sun, 29 Jan 2017 18:51:23 +1100</pubDate>
       
-      <guid>http://leandataguy.com/2017/01/29/theme-trigger/</guid>
-      <description>&lt;p&gt;Hoping adding a new post will fix the theme displaying&lt;/p&gt;
+      <guid>http://leandataguy.com/project/simpson-generator/</guid>
+      <description>
+
+&lt;p&gt;This is a short witty intro that I imagine an article like this would have.&lt;/p&gt;
+
+&lt;h1 id=&#34;this-is-the-first-header&#34;&gt;This is the First Header&lt;/h1&gt;
+
+&lt;pre&gt;&lt;code&gt;import asyncio
+ 
+@asyncio.coroutine
+def my_coroutine(seconds_to_sleep=3):
+    print(&#39;my_coroutine sleeping for: {0} seconds&#39;.format(seconds_to_sleep))
+    yield from asyncio.sleep(seconds_to_sleep)
+ 
+ 
+loop = asyncio.get_event_loop()
+loop.run_until_complete(
+    asyncio.gather(my_coroutine())
+)
+loop.close()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;another-test&#34;&gt;Another Test&lt;/h2&gt;
+
+&lt;p&gt;So if I gave you an example of inline python code, such as &lt;code&gt;class Car(object):&lt;/code&gt; it probably wouldn&amp;rsquo;t highlight&lt;/p&gt;
+
+&lt;h1 id=&#34;time-for-header-two&#34;&gt;Time for Header Two&lt;/h1&gt;
+
+&lt;p&gt;Hugo is terrifyingly quick, I look over at the browser and it&amp;rsquo;s already rendered the entire new site&lt;/p&gt;
+
+&lt;p&gt;I wonder if inline fenced code like &lt;code&gt;my_python = 3**2&lt;/code&gt; highlights.&lt;/p&gt;
+
+&lt;h4 id=&#34;nope&#34;&gt;Nope&lt;/h4&gt;
 </description>
     </item>
     
     <item>
-      <title>My Cool Title</title>
-      <link>http://leandataguy.com/2017/01/29/update-test/</link>
-      <pubDate>Sun, 29 Jan 2017 10:41:11 +1100</pubDate>
+      <title>Company X is promoting Y, don&#39;t trust them</title>
+      <link>http://leandataguy.com/2017/01/29/my-post/</link>
+      <pubDate>Sun, 29 Jan 2017 18:47:36 +1100</pubDate>
       
-      <guid>http://leandataguy.com/2017/01/29/update-test/</guid>
-      <description>&lt;p&gt;This is a test to see if changes get propagated on push&lt;/p&gt;
+      <guid>http://leandataguy.com/2017/01/29/my-post/</guid>
+      <description>
+
+&lt;h1 id=&#34;something-is-rotten&#34;&gt;Something is Rotten&lt;/h1&gt;
+
+&lt;blockquote class=&#34;twitter-tweet&#34;&gt;&lt;p lang=&#34;en&#34; dir=&#34;ltr&#34;&gt;Hugo 0.15 will have 30%+ faster render times thanks to this commit &lt;a href=&#34;https://t.co/FfzhM8bNhT&#34;&gt;https://t.co/FfzhM8bNhT&lt;/a&gt;  &lt;a href=&#34;https://twitter.com/hashtag/gohugo?src=hash&#34;&gt;#gohugo&lt;/a&gt; &lt;a href=&#34;https://twitter.com/hashtag/golang?src=hash&#34;&gt;#golang&lt;/a&gt; &lt;a href=&#34;https://t.co/ITbMNU2BUf&#34;&gt;https://t.co/ITbMNU2BUf&lt;/a&gt;&lt;/p&gt;&amp;mdash; Steve Francia (@spf13) &lt;a href=&#34;https://twitter.com/spf13/status/666616452582129664&#34;&gt;November 17, 2015&lt;/a&gt;&lt;/blockquote&gt;
+&lt;script async src=&#34;//platform.twitter.com/widgets.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;
+
+&lt;p&gt;This is a reference to the above tweet, that is the inspiration for this post. Then the article goes on to discuss the implication etc.&lt;/p&gt;
+
+&lt;h1 id=&#34;more-evidence&#34;&gt;More Evidence&lt;/h1&gt;
+
+&lt;p&gt;As proof of disingenuity, an interview with some guy on youtube or something.&lt;/p&gt;
+
+&lt;p&gt;
+&lt;div style=&#34;position: relative; padding-bottom: 56.25%; padding-top: 30px; height: 0; overflow: hidden;&#34;&gt;
+  &lt;iframe src=&#34;//www.youtube.com/embed/w7Ft2ymGmfc&#34; style=&#34;position: absolute; top: 0; left: 0; width: 100%; height: 100%;&#34; allowfullscreen frameborder=&#34;0&#34;&gt;&lt;/iframe&gt;
+ &lt;/div&gt;
+&lt;/p&gt;
+
+&lt;p&gt;and a github link&lt;/p&gt;
 </description>
     </item>
     
     <item>
-      <title>This is a title to see if github pages is updating the website</title>
-      <link>http://leandataguy.com/2017/01/28/test-post-2/</link>
-      <pubDate>Sat, 28 Jan 2017 23:26:53 +1100</pubDate>
+      <title>Contact Me</title>
+      <link>http://leandataguy.com/page/contact/</link>
+      <pubDate>Sun, 29 Jan 2017 18:45:25 +1100</pubDate>
       
-      <guid>http://leandataguy.com/2017/01/28/test-post-2/</guid>
-      <description>&lt;p&gt;well is it?&lt;/p&gt;
-</description>
+      <guid>http://leandataguy.com/page/contact/</guid>
+      <description></description>
     </item>
     
     <item>
-      <title></title>
-      <link>http://leandataguy.com/2017/01/28/test-post/</link>
-      <pubDate>Sat, 28 Jan 2017 23:16:33 +1100</pubDate>
+      <title>About The Site</title>
+      <link>http://leandataguy.com/page/about/</link>
+      <pubDate>Sun, 29 Jan 2017 18:45:22 +1100</pubDate>
       
-      <guid>http://leandataguy.com/2017/01/28/test-post/</guid>
-      <description>&lt;p&gt;this is my test post&lt;/p&gt;
+      <guid>http://leandataguy.com/page/about/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>This is a title</title>
+      <link>http://leandataguy.com/project/example-project/</link>
+      <pubDate>Sun, 29 Jan 2017 18:45:07 +1100</pubDate>
+      
+      <guid>http://leandataguy.com/project/example-project/</guid>
+      <description>&lt;p&gt;This is an example project&lt;/p&gt;
 </description>
     </item>
     

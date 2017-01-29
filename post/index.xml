@@ -7,46 +7,35 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>My Name</copyright>
-    <lastBuildDate>Sun, 29 Jan 2017 10:46:24 +1100</lastBuildDate>
+    <lastBuildDate>Sun, 29 Jan 2017 18:47:36 +1100</lastBuildDate>
     <atom:link href="http://leandataguy.com/post/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
-      <title></title>
-      <link>http://leandataguy.com/2017/01/29/theme-trigger/</link>
-      <pubDate>Sun, 29 Jan 2017 10:46:24 +1100</pubDate>
+      <title>Company X is promoting Y, don&#39;t trust them</title>
+      <link>http://leandataguy.com/2017/01/29/my-post/</link>
+      <pubDate>Sun, 29 Jan 2017 18:47:36 +1100</pubDate>
       
-      <guid>http://leandataguy.com/2017/01/29/theme-trigger/</guid>
-      <description>&lt;p&gt;Hoping adding a new post will fix the theme displaying&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>My Cool Title</title>
-      <link>http://leandataguy.com/2017/01/29/update-test/</link>
-      <pubDate>Sun, 29 Jan 2017 10:41:11 +1100</pubDate>
-      
-      <guid>http://leandataguy.com/2017/01/29/update-test/</guid>
-      <description>&lt;p&gt;This is a test to see if changes get propagated on push&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>This is a title to see if github pages is updating the website</title>
-      <link>http://leandataguy.com/2017/01/28/test-post-2/</link>
-      <pubDate>Sat, 28 Jan 2017 23:26:53 +1100</pubDate>
-      
-      <guid>http://leandataguy.com/2017/01/28/test-post-2/</guid>
-      <description>&lt;p&gt;well is it?&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>http://leandataguy.com/2017/01/28/test-post/</link>
-      <pubDate>Sat, 28 Jan 2017 23:16:33 +1100</pubDate>
-      
-      <guid>http://leandataguy.com/2017/01/28/test-post/</guid>
-      <description>&lt;p&gt;this is my test post&lt;/p&gt;
+      <guid>http://leandataguy.com/2017/01/29/my-post/</guid>
+      <description>
+
+&lt;h1 id=&#34;something-is-rotten&#34;&gt;Something is Rotten&lt;/h1&gt;
+
+&lt;blockquote class=&#34;twitter-tweet&#34;&gt;&lt;p lang=&#34;en&#34; dir=&#34;ltr&#34;&gt;Hugo 0.15 will have 30%+ faster render times thanks to this commit &lt;a href=&#34;https://t.co/FfzhM8bNhT&#34;&gt;https://t.co/FfzhM8bNhT&lt;/a&gt;  &lt;a href=&#34;https://twitter.com/hashtag/gohugo?src=hash&#34;&gt;#gohugo&lt;/a&gt; &lt;a href=&#34;https://twitter.com/hashtag/golang?src=hash&#34;&gt;#golang&lt;/a&gt; &lt;a href=&#34;https://t.co/ITbMNU2BUf&#34;&gt;https://t.co/ITbMNU2BUf&lt;/a&gt;&lt;/p&gt;&amp;mdash; Steve Francia (@spf13) &lt;a href=&#34;https://twitter.com/spf13/status/666616452582129664&#34;&gt;November 17, 2015&lt;/a&gt;&lt;/blockquote&gt;
+&lt;script async src=&#34;//platform.twitter.com/widgets.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;
+
+&lt;p&gt;This is a reference to the above tweet, that is the inspiration for this post. Then the article goes on to discuss the implication etc.&lt;/p&gt;
+
+&lt;h1 id=&#34;more-evidence&#34;&gt;More Evidence&lt;/h1&gt;
+
+&lt;p&gt;As proof of disingenuity, an interview with some guy on youtube or something.&lt;/p&gt;
+
+&lt;p&gt;
+&lt;div style=&#34;position: relative; padding-bottom: 56.25%; padding-top: 30px; height: 0; overflow: hidden;&#34;&gt;
+  &lt;iframe src=&#34;//www.youtube.com/embed/w7Ft2ymGmfc&#34; style=&#34;position: absolute; top: 0; left: 0; width: 100%; height: 100%;&#34; allowfullscreen frameborder=&#34;0&#34;&gt;&lt;/iframe&gt;
+ &lt;/div&gt;
+&lt;/p&gt;
+
+&lt;p&gt;and a github link&lt;/p&gt;
 </description>
     </item>
     

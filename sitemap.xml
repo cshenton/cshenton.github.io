@@ -2,51 +2,35 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://leandataguy.com/project/simpson-generator/</loc>
-    <lastmod>2017-01-29T18:51:23+11:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://leandataguy.com/2017/01/29/my-post/</loc>
-    <lastmod>2017-01-29T18:47:36+11:00</lastmod>
+    <loc>http://leandataguy.com/page/about/</loc>
+    <lastmod>2017-02-03T23:45:58+11:00</lastmod>
   </url>
   
   <url>
     <loc>http://leandataguy.com/page/contact/</loc>
-    <lastmod>2017-01-29T18:45:25+11:00</lastmod>
+    <lastmod>2017-02-03T23:45:25+11:00</lastmod>
   </url>
   
   <url>
-    <loc>http://leandataguy.com/page/about/</loc>
-    <lastmod>2017-01-29T18:45:22+11:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://leandataguy.com/project/example-project/</loc>
-    <lastmod>2017-01-29T18:45:07+11:00</lastmod>
+    <loc>http://leandataguy.com/2017/02/03/stop-r/</loc>
+    <lastmod>2017-02-03T20:25:49+11:00</lastmod>
   </url>
   
   <url>
     <loc>http://leandataguy.com/</loc>
-    <lastmod>2017-01-29T18:51:23+11:00</lastmod>
+    <lastmod>2017-02-03T23:45:58+11:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>http://leandataguy.com/page/</loc>
-    <lastmod>2017-01-29T18:45:25+11:00</lastmod>
+    <lastmod>2017-02-03T23:45:58+11:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>http://leandataguy.com/post/</loc>
-    <lastmod>2017-01-29T18:47:36+11:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>http://leandataguy.com/project/</loc>
-    <lastmod>2017-01-29T18:51:23+11:00</lastmod>
+    <lastmod>2017-02-03T20:25:49+11:00</lastmod>
     <priority>0</priority>
   </url>
   

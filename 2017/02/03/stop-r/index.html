@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="google-site-verification" content="D32gxomwQXNWZYIlG8Lk6iVuPNduhXgpVCOmnJYKEno" />
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Stop Using R &middot; Charles Shenton</title>
+        <meta name="description" content="This article is for data scientists (those folks who build predictive systems and squeeze value out of data in business settings). If you&rsquo;re an academic, an applied statistician, or if you otherwise work with the same dataset for extended periods of time, this probably doesn&rsquo;t apply to you, but you might enjoy it anyway.
+ As data scientists, we do pretty cool things. We predict, we personalise, we automate.">
+        <meta name="HandheldFriendly" content="True">
+        <meta name="MobileOptimized" content="320">
+        <meta name="generator" content="Hugo 0.18.1" />
+        <meta name="robots" content="index,follow">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <link rel="stylesheet" href="http://leandataguy.com/dist/styles.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,600,700,300&subset=latin,cyrillic-ext,latin-ext,cyrillic">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        
+    </head>
+    <body>
+        
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'XXX', 'auto');
+ga('send', 'pageview');
+</script>
+
+
+        <div id="wrapper">
+            <header class="site-header">
+                <div class="container">
+                    <div class="site-title-wrapper">
+                        
+                            <h1 class="site-title">
+                                <a title="Lean Data Guy" href="http://leandataguy.com/">Lean Data Guy</a>
+                            </h1>
+                        
+                        <a class="button-square" href="http://leandataguy.com/index.xml"><i class="fa fa-rss"></i></a>
+                        
+                        
+                        
+                            <a class="button-square button-social hint--top" data-hint="Github" title="Github" href="https://github.com/cshenton">
+                                <i class="fa fa-github-alt"></i>
+                            </a>
+                        
+                        
+                        
+                        
+                        
+                            <a class="button-square button-social hint--top" data-hint="Email" title="Email" href="mailto:charlie@leandataguy.com">
+                                <i class="fa fa-envelope"></i>
+                            </a>
+                        
+                    </div>
+
+                    <ul class="site-nav">
+                        
+    <li class="site-nav-item">
+        <a title="Blog" href="/">Blog</a>
+    </li>
+
+    <li class="site-nav-item">
+        <a title="About" href="/page/about/">About</a>
+    </li>
+
+                    </ul>
+                </div>
+            </header>
+
+            <div id="container">
+
+
+<div class="container">
+    <article class="post-container" itemscope="" itemtype="http://schema.org/BlogPosting">
+        <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Stop Using R</h1>
+    
+    <p class="post-date">
+        <span>Published <time datetime="2017-02-03" itemprop="datePublished">Fri, Feb 3, 2017</time></span>
+        <span>by</span>
+        <span itemscope="" itemprop="author" itemtype="https://schema.org/Person">
+            <span itemprop="name">
+                <a href="" itemprop="url" rel="author">Charles Shenton</a>
+            </span>
+        </span>
+    </p>
+</header>
+
+        <div class="post-content clearfix" itemprop="articleBody">
+    
+
+    
+
+<blockquote>
+<p>This article is for data scientists (those folks who build predictive systems and squeeze value out of data in business settings). If you&rsquo;re an academic, an applied statistician, or if you otherwise work with the same dataset for extended periods of time, this probably doesn&rsquo;t apply to you, but you might enjoy it anyway.</p>
+</blockquote>
+
+<p>As data scientists, we do pretty cool things. We predict, we personalise, we automate. However, at the end of the day we&rsquo;re here because we deliver value, and if anything is more valuable than a great model, it&rsquo;s a great model that runs itself.</p>
+
+<p>Letting your models free, by running them in production and making their results available, creates value that scales with the number of people using them. Running it at your interpreter means its value is a finite as your time.</p>
+
+<p>More importantly, production models are stable platforms that applications can be built on top of. And because the model learns so too does the application. That&rsquo;s all exciting, but it&rsquo;s not easy, and R, though it is a popular language for data science, is not up to the task.</p>
+
+<h1 id="r-can-t-walk-and-chew-gum">R Can&rsquo;t Walk and Chew Gum</h1>
+
+<p>As a language, R is pretty mature, it has client libraries for most big data tools under the sun, it has its own dashboarding framework, and it has  packages like dplyr, which make once off data munging a real pleasure. But that&rsquo;s just the problem, R is very much a &ldquo;once off&rdquo; kind of language. It&rsquo;s great for writing sets of instructions to the computer (load this, alter this, train this, graph this), but it doesn&rsquo;t encourage the kind of abstraction that leads to <code>DRY</code> (Don&rsquo;t Repeat Yourself) code.</p>
+
+<p>So exactly what is R missing?</p>
+
+<h3 id="a-command-line-package-manager">A command line package manager</h3>
+
+<p>This is the smallest gripe here, but it&rsquo;s an important one. Bad dependency management is the kind of small thing which can cause big problems, and it&rsquo;s a headache to troubleshoot. Within R packages, this is handled by a <code>Depends</code> field, but for an R application intended for running and not importing, packaging feels like an awkward solution. Projects like <a href="https://github.com/rstudio/packrat">packrat</a> take a step towards fixing this, by mimicking <code>virtualenv</code> in python, but the real issue is that, in R, packages have to be installed from inside the interpreter.</p>
+
+<p>This is bad. For one, the default <code>install.packages</code> doesn&rsquo;t support installing a particular version of a package. If you need to do that (i.e. if a package update introduces non backwards-compatible changes that break your code) <a href="http://stackoverflow.com/questions/17082341/installing-older-version-of-r-package">you need to install another package</a>, specifically <code>devtools</code>, and call a completely different install function <code>install.versions</code>. Crazy! The functionality is technically there, but it&rsquo;s not surfaced in the core language, which is a bit of a theme with R.</p>
+
+<p>Like I said, this is a small gripe, and more a stylistic one, but it makes deploying R code a pain, and makes for <a href="https://github.com/glamp/r-docker/blob/master/Dockerfile">really ugly Dockerfiles</a>.</p>
+
+<h3 id="a-way-to-organise-your-code">A way to organise your code</h3>
+
+<p>Collaboration is an important part of writing production code, and having a navigable codebase makes for easy collaboration. In a good python codebase, dependencies are clearly namespaced through modules and subpackages, and (python 2 to 3 nuances aside) naming conventions in import statements map nicely to directory structures in the codebase as a whole.</p>
+
+<p>For example, if I have a python callable which includes</p>
+
+<pre><code class="language-python">    from mypackage.models.input_data import Parameter
+</code></pre>
+
+<p>I know to look for the <code>Parameter</code> class in <code>input_data.py</code> within the <code>models</code> subfolder. Easy.</p>
+
+<p>This is not the case in R, and the most <a href="https://github.com/topepo/caret/tree/master/models/files">popular</a> R <a href="https://github.com/hadley/dplyr/tree/master/R">packages</a>  are an <a href="https://github.com/tidyverse/ggplot2/tree/master/R">upsetting</a> testament to this.</p>
+
+<h3 id="a-flexible-testing-framework">A flexible testing framework</h3>
+
+<p>There is not much of a culture of writing tests among data scientists, and there are good reasons for this. The first is that many data scientists write scripts which comprise a series of function calls that just pass state to the next function call, like:</p>
+
+<pre><code>    data1 &lt;- some_import_function(some_source)
+    data2 &lt;- some_import_function(other_source)
+
+    combined_data &lt;- join_function(data1, data2)
+    cleaned_data &lt;- cleaner_function(combined_data)
+    formatted_data &lt;- formatting_function(cleaned_data)
+
+    export(formatted_data)
+</code></pre>
+
+<p>(This is part of the reason why dplyr&rsquo;s pipe <code>%&gt;%</code> operator is so useful in R, but also makes most data scientists&rsquo; code totally unreadable)</p>
+
+<p>When this is what you&rsquo;re writing all day, building up the habit of testing code isn&rsquo;t easy.</p>
+
+<p>The second is that when data scientists are writing production systems, they usually depend on a fair bit of external tooling. My first experience with this was writing an API to expose our geographically linked data. The application relied on the database to efficiently match geographic boundaries, so I was thrown right in the deep end, writing integration tests for a specific database extension. In the end I got it done, because writing database backed applications in python is par for the course, so python&rsquo;s test framwork <code>pytest</code> made writing those tests easy.</p>
+
+<p>This is not the case in R, in which the <code>RUnit</code> test framework is sort of it. Its lack of flexibility is one thing but, like most R packages, it is allergic to decent documentation, providing only a <a href="https://cran.r-project.org/web/packages/RUnit/RUnit.pdf">pdf</a> of function references. Compare this to <a href="http://doc.pytest.org/en/latest/">pytest</a>, which has copious examples with proper syntax highlighting, and a navigation system beyond a table of contents, yeesh.</p>
+
+<h3 id="a-framework-for-building-rest-apis">A framework for building REST APIs</h3>
+
+<p>Python is not just a language for statistical computing, it&rsquo;s a great general scientific computing language, and though not as in vogue as ruby or modern javascript frameworks like node and react, is a solid language for web development as well.</p>
+
+<p>This means it has fully fledged web frameworks, like <code>django</code>, and <code>flask</code>, for building web applications, and lighter weight ones, like <code>falcon</code>, and <code>hug</code>, for building standalone HTTP APIs.</p>
+
+<p>So why should you care? You&rsquo;re a data scientist, not a web developer. Well if an application is going to make use of your model, it either needs to be directly integrated into that application&rsquo;s codebase (a story for another time), or it needs to provide a consistent network interface for accessing its results. HTTP APIs are the de facto standard for doing just that, and are used by python developers for a heck of a lot more than statistical models. This means the web frameworks in python are mature, and also provide suppport for python&rsquo;s testing frameworks.</p>
+
+<p>R has nothing approaching this. The closest that exists is <code>plumber</code>, which uses decorators to map R functions to HTTP verbs, and which depends on <code>httpuv</code> which handles basic HTTP requests, but these are not production ready (read, don&rsquo;t use a proper web server).</p>
+
+<h1 id="so-what-now">So What Now?</h1>
+
+<p>Despite the provocative title, this post is not about discouraging you from using R. It&rsquo;s a great language for exploratory work, and since we often deal with complex data sources, that kind of exploration is best done on the fly. And while R makes it very hard to write quality code, python makes it easy to write bad code. If you&rsquo;re entire body of work in python looks like my joke R script above, and is devoid of a single test, that&rsquo;s probably a sign you&rsquo;re not using the python ecosystem to its fullest.</p>
+
+<p>But unlike R, the python ecosystem is there, even if you&rsquo;re not using it. So when the time comes to build a production model that will be useful and lasting, R will simply not cut it.</p>
+
+</div>
+
+        <footer class="post-footer clearfix">
+    
+
+    <div class="share">
+        
+            <a class="icon-twitter" href="https://twitter.com/share?text=Stop%20Using%20R&url=http%3a%2f%2fleandataguy.com%2f2017%2f02%2f03%2fstop-r%2f"
+                onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                <i class="fa fa-twitter"></i>
+                <span class="hidden">Twitter</span>
+            </a>
+        
+
+        
+            <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2fleandataguy.com%2f2017%2f02%2f03%2fstop-r%2f"
+                onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                <i class="fa fa-facebook"></i>
+                <span class="hidden">Facebook</span>
+            </a>
+        
+
+        
+            <a class="icon-google-plus" href="https://plus.google.com/share?url=http%3a%2f%2fleandataguy.com%2f2017%2f02%2f03%2fstop-r%2f"
+              onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+              <i class="fa fa-google-plus"></i>
+                <span class="hidden">Google+</span>
+            </a>
+        
+    </div>
+</footer>
+
+        
+    <div class="comments">
+        <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'XXX';
+    var disqus_identifier = 'http:\/\/leandataguy.com\/2017\/02\/03\/stop-r\/';
+    var disqus_title = 'Stop Using R';
+    var disqus_url = 'http:\/\/leandataguy.com\/2017\/02\/03\/stop-r\/';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </div>
+
+    </article>
+</div>
+
+            </div>
+        </div>
+
+        <footer class="footer">
+            <div class="container">
+                <div class="site-title-wrapper">
+                    <h1 class="site-title">
+                        <a title="Lean Data Guy" href="http://leandataguy.com/">Lean Data Guy</a>
+                    </h1>
+                    <a class="button-square button-jump-top js-jump-top" href="#">
+                        <i class="fa fa-angle-up"></i>
+                    </a>
+                </div>
+
+                <p class="footer-copyright">
+                    <span>&copy; 2017 / Powered by <a href="https://gohugo.io/">Hugo</a></span>
+                </p>
+                <p class="footer-copyright">
+                    <span><a href="https://github.com/roryg/ghostwriter">Ghostwriter theme</a> By <a href="http://jollygoodthemes.com">JollyGoodThemes</a></span>
+                    <span>/ <a href="https://github.com/jbub/ghostwriter">Ported</a> to Hugo By <a href="https://github.com/jbub">jbub</a></span>
+                </p>
+            </div>
+        </footer>
+
+        <script src="http://leandataguy.com/js/jquery-1.11.3.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"></script>
+        <script src="http://leandataguy.com/js/jquery.fitvids.js"></script>
+        <script src="http://leandataguy.com/js/scripts.js"></script>
+    </body>
+</html>
+

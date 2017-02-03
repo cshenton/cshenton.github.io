@@ -104,7 +104,7 @@ ga('send', 'pageview');
 
 <p>Letting your models free, by running them in production and making their results available, creates value that scales with the number of people using them. Running it at your interpreter means its value is a finite as your time.</p>
 
-<p>More importantly, production models are stable platforms that applications can be built on top of. And because the model learns so too does the application. That&rsquo;s all exciting, but it&rsquo;s not easy, and R, though it is a popular language for data science, is not up to the task.</p>
+<p>More importantly, production models are stable platforms that applications can be built on top of. And because the model learns so too does the application. That&rsquo;s all exciting, but it&rsquo;s not easy, and R, though it is a popular language among data scientists, is not up to the task.</p>
 
 <h1 id="r-can-t-walk-and-chew-gum">R Can&rsquo;t Walk and Chew Gum</h1>
 
@@ -114,7 +114,7 @@ ga('send', 'pageview');
 
 <h3 id="a-command-line-package-manager">A command line package manager</h3>
 
-<p>This is the smallest gripe here, but it&rsquo;s an important one. Bad dependency management is the kind of small thing which can cause big problems, and it&rsquo;s a headache to troubleshoot. Within R packages, this is handled by a <code>Depends</code> field, but for an R application intended for running and not importing, packaging feels like an awkward solution. Projects like <a href="https://github.com/rstudio/packrat">packrat</a> take a step towards fixing this, by mimicking <code>virtualenv</code> in python, but the real issue is that, in R, packages have to be installed from inside the interpreter.</p>
+<p>This is the smallest gripe here, but it&rsquo;s an important one. Bad dependency management is the kind of small thing which can cause big problems that are a headache to troubleshoot. Within R packages, this is handled by a <code>Depends</code> field, but for an R application intended for running and not importing, packaging feels like an awkward solution. Projects like <a href="https://github.com/rstudio/packrat">packrat</a> take a step towards fixing this, by mimicking <code>virtualenv</code> in python, but the real issue is that, in R, packages have to be installed from inside the interpreter.</p>
 
 <p>This is bad. For one, the default <code>install.packages</code> doesn&rsquo;t support installing a particular version of a package. If you need to do that (i.e. if a package update introduces non backwards-compatible changes that break your code) <a href="http://stackoverflow.com/questions/17082341/installing-older-version-of-r-package">you need to install another package</a>, specifically <code>devtools</code>, and call a completely different install function <code>install.versions</code>. Crazy! The functionality is technically there, but it&rsquo;s not surfaced in the core language, which is a bit of a theme with R.</p>
 
@@ -147,7 +147,7 @@ ga('send', 'pageview');
     export(formatted_data)
 </code></pre>
 
-<p>(This is part of the reason why dplyr&rsquo;s pipe <code>%&gt;%</code> operator is so useful in R, but also makes most data scientists&rsquo; code totally unreadable)</p>
+<p>(This is part of the reason why dplyr&rsquo;s pipe <code>%&gt;%</code> operator is so useful in R, but also makes most data scientists&rsquo; code totally unreadable. As a further aside, this antipattern is a result of many data scientists coming from an academic background where STATA and SAS&rsquo;s limited scripting languages encourage this)</p>
 
 <p>When this is what you&rsquo;re writing all day, building up the habit of testing code isn&rsquo;t easy.</p>
 
@@ -167,7 +167,7 @@ ga('send', 'pageview');
 
 <h1 id="so-what-now">So What Now?</h1>
 
-<p>Despite the provocative title, this post is not about discouraging you from using R. It&rsquo;s a great language for exploratory work, and since we often deal with complex data sources, that kind of exploration is best done on the fly. And while R makes it very hard to write quality code, python makes it easy to write bad code. If you&rsquo;re entire body of work in python looks like my joke R script above, and is devoid of a single test, that&rsquo;s probably a sign you&rsquo;re not using the python ecosystem to its fullest.</p>
+<p>Despite the provocative title, this post is not about discouraging you from using R. It&rsquo;s a great language for exploratory work, and since we often deal with complex data sources, that kind of exploration is best done on the fly. And while R makes it very hard to write quality code, python makes it easy to write bad code. If your entire body of work in python looks like my joke R script above, and is devoid of a single test, that&rsquo;s probably a sign you&rsquo;re not using the python ecosystem to its fullest.</p>
 
 <p>But unlike R, the python ecosystem is there, even if you&rsquo;re not using it. So when the time comes to build a production model that will be useful and lasting, R will simply not cut it.</p>
 
@@ -178,7 +178,7 @@ ga('send', 'pageview');
 
     <div class="share">
         
-            <a class="icon-twitter" href="https://twitter.com/share?text=Stop%20Using%20R&url=http%3a%2f%2fleandataguy.com%2f2017%2f02%2f03%2fstop-r%2f"
+            <a class="icon-twitter" href="https://twitter.com/share?text=Stop%20Using%20R&url=http%3a%2f%2fleandataguy.com%2f2017%2f02%2f03%2fstop-using-r%2f"
                 onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
                 <i class="fa fa-twitter"></i>
                 <span class="hidden">Twitter</span>
@@ -186,7 +186,7 @@ ga('send', 'pageview');
         
 
         
-            <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2fleandataguy.com%2f2017%2f02%2f03%2fstop-r%2f"
+            <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2fleandataguy.com%2f2017%2f02%2f03%2fstop-using-r%2f"
                 onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
                 <i class="fa fa-facebook"></i>
                 <span class="hidden">Facebook</span>
@@ -194,7 +194,7 @@ ga('send', 'pageview');
         
 
         
-            <a class="icon-google-plus" href="https://plus.google.com/share?url=http%3a%2f%2fleandataguy.com%2f2017%2f02%2f03%2fstop-r%2f"
+            <a class="icon-google-plus" href="https://plus.google.com/share?url=http%3a%2f%2fleandataguy.com%2f2017%2f02%2f03%2fstop-using-r%2f"
               onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
               <i class="fa fa-google-plus"></i>
                 <span class="hidden">Google+</span>
@@ -208,9 +208,9 @@ ga('send', 'pageview');
         <div id="disqus_thread"></div>
 <script type="text/javascript">
     var disqus_shortname = 'XXX';
-    var disqus_identifier = 'http:\/\/leandataguy.com\/2017\/02\/03\/stop-r\/';
+    var disqus_identifier = 'http:\/\/leandataguy.com\/2017\/02\/03\/stop-using-r\/';
     var disqus_title = 'Stop Using R';
-    var disqus_url = 'http:\/\/leandataguy.com\/2017\/02\/03\/stop-r\/';
+    var disqus_url = 'http:\/\/leandataguy.com\/2017\/02\/03\/stop-using-r\/';
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

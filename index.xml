@@ -47,10 +47,10 @@
     
     <item>
       <title>Stop Using R</title>
-      <link>http://leandataguy.com/2017/02/03/stop-r/</link>
+      <link>http://leandataguy.com/2017/02/03/stop-using-r/</link>
       <pubDate>Fri, 03 Feb 2017 20:25:49 +1100</pubDate>
       
-      <guid>http://leandataguy.com/2017/02/03/stop-r/</guid>
+      <guid>http://leandataguy.com/2017/02/03/stop-using-r/</guid>
       <description>
 
 &lt;blockquote&gt;
@@ -61,7 +61,7 @@
 
 &lt;p&gt;Letting your models free, by running them in production and making their results available, creates value that scales with the number of people using them. Running it at your interpreter means its value is a finite as your time.&lt;/p&gt;
 
-&lt;p&gt;More importantly, production models are stable platforms that applications can be built on top of. And because the model learns so too does the application. That&amp;rsquo;s all exciting, but it&amp;rsquo;s not easy, and R, though it is a popular language for data science, is not up to the task.&lt;/p&gt;
+&lt;p&gt;More importantly, production models are stable platforms that applications can be built on top of. And because the model learns so too does the application. That&amp;rsquo;s all exciting, but it&amp;rsquo;s not easy, and R, though it is a popular language among data scientists, is not up to the task.&lt;/p&gt;
 
 &lt;h1 id=&#34;r-can-t-walk-and-chew-gum&#34;&gt;R Can&amp;rsquo;t Walk and Chew Gum&lt;/h1&gt;
 
@@ -71,7 +71,7 @@
 
 &lt;h3 id=&#34;a-command-line-package-manager&#34;&gt;A command line package manager&lt;/h3&gt;
 
-&lt;p&gt;This is the smallest gripe here, but it&amp;rsquo;s an important one. Bad dependency management is the kind of small thing which can cause big problems, and it&amp;rsquo;s a headache to troubleshoot. Within R packages, this is handled by a &lt;code&gt;Depends&lt;/code&gt; field, but for an R application intended for running and not importing, packaging feels like an awkward solution. Projects like &lt;a href=&#34;https://github.com/rstudio/packrat&#34;&gt;packrat&lt;/a&gt; take a step towards fixing this, by mimicking &lt;code&gt;virtualenv&lt;/code&gt; in python, but the real issue is that, in R, packages have to be installed from inside the interpreter.&lt;/p&gt;
+&lt;p&gt;This is the smallest gripe here, but it&amp;rsquo;s an important one. Bad dependency management is the kind of small thing which can cause big problems that are a headache to troubleshoot. Within R packages, this is handled by a &lt;code&gt;Depends&lt;/code&gt; field, but for an R application intended for running and not importing, packaging feels like an awkward solution. Projects like &lt;a href=&#34;https://github.com/rstudio/packrat&#34;&gt;packrat&lt;/a&gt; take a step towards fixing this, by mimicking &lt;code&gt;virtualenv&lt;/code&gt; in python, but the real issue is that, in R, packages have to be installed from inside the interpreter.&lt;/p&gt;
 
 &lt;p&gt;This is bad. For one, the default &lt;code&gt;install.packages&lt;/code&gt; doesn&amp;rsquo;t support installing a particular version of a package. If you need to do that (i.e. if a package update introduces non backwards-compatible changes that break your code) &lt;a href=&#34;http://stackoverflow.com/questions/17082341/installing-older-version-of-r-package&#34;&gt;you need to install another package&lt;/a&gt;, specifically &lt;code&gt;devtools&lt;/code&gt;, and call a completely different install function &lt;code&gt;install.versions&lt;/code&gt;. Crazy! The functionality is technically there, but it&amp;rsquo;s not surfaced in the core language, which is a bit of a theme with R.&lt;/p&gt;
 
@@ -104,7 +104,7 @@
     export(formatted_data)
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;(This is part of the reason why dplyr&amp;rsquo;s pipe &lt;code&gt;%&amp;gt;%&lt;/code&gt; operator is so useful in R, but also makes most data scientists&amp;rsquo; code totally unreadable)&lt;/p&gt;
+&lt;p&gt;(This is part of the reason why dplyr&amp;rsquo;s pipe &lt;code&gt;%&amp;gt;%&lt;/code&gt; operator is so useful in R, but also makes most data scientists&amp;rsquo; code totally unreadable. As a further aside, this antipattern is a result of many data scientists coming from an academic background where STATA and SAS&amp;rsquo;s limited scripting languages encourage this)&lt;/p&gt;
 
 &lt;p&gt;When this is what you&amp;rsquo;re writing all day, building up the habit of testing code isn&amp;rsquo;t easy.&lt;/p&gt;
 
@@ -124,7 +124,7 @@
 
 &lt;h1 id=&#34;so-what-now&#34;&gt;So What Now?&lt;/h1&gt;
 
-&lt;p&gt;Despite the provocative title, this post is not about discouraging you from using R. It&amp;rsquo;s a great language for exploratory work, and since we often deal with complex data sources, that kind of exploration is best done on the fly. And while R makes it very hard to write quality code, python makes it easy to write bad code. If you&amp;rsquo;re entire body of work in python looks like my joke R script above, and is devoid of a single test, that&amp;rsquo;s probably a sign you&amp;rsquo;re not using the python ecosystem to its fullest.&lt;/p&gt;
+&lt;p&gt;Despite the provocative title, this post is not about discouraging you from using R. It&amp;rsquo;s a great language for exploratory work, and since we often deal with complex data sources, that kind of exploration is best done on the fly. And while R makes it very hard to write quality code, python makes it easy to write bad code. If your entire body of work in python looks like my joke R script above, and is devoid of a single test, that&amp;rsquo;s probably a sign you&amp;rsquo;re not using the python ecosystem to its fullest.&lt;/p&gt;
 
 &lt;p&gt;But unlike R, the python ecosystem is there, even if you&amp;rsquo;re not using it. So when the time comes to build a production model that will be useful and lasting, R will simply not cut it.&lt;/p&gt;
 </description>

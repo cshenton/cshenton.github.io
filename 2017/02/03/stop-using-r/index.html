@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title>Stop Using R &middot; Charles Shenton</title>
-        <meta name="description" content="This article is for data scientists (those folks who build predictive systems and squeeze value out of data in business settings). If you&rsquo;re an academic, an applied statistician, or if you otherwise work with the same dataset for extended periods of time, this probably doesn&rsquo;t apply to you, but you might enjoy it anyway.
+        <meta name="description" content="This article is for data scientists (those folks who build predictive systems and squeeze value out of data in business settings). If you&rsquo;re an academic, an applied statistician, or if you otherwise work with a static dataset for extended periods of time, this probably doesn&rsquo;t apply to you, but you might enjoy it anyway.
  As data scientists, we do pretty cool things. We predict, we personalise, we automate.">
         <meta name="HandheldFriendly" content="True">
         <meta name="MobileOptimized" content="320">
@@ -26,7 +26,7 @@
 m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-ga('create', 'XXX', 'auto');
+ga('create', 'UA-91402853-1', 'auto');
 ga('send', 'pageview');
 </script>
 
@@ -97,7 +97,7 @@ ga('send', 'pageview');
     
 
 <blockquote>
-<p>This article is for data scientists (those folks who build predictive systems and squeeze value out of data in business settings). If you&rsquo;re an academic, an applied statistician, or if you otherwise work with the same dataset for extended periods of time, this probably doesn&rsquo;t apply to you, but you might enjoy it anyway.</p>
+<p>This article is for data scientists (those folks who build predictive systems and squeeze value out of data in business settings). If you&rsquo;re an academic, an applied statistician, or if you otherwise work with a static dataset for extended periods of time, this probably doesn&rsquo;t apply to you, but you might enjoy it anyway.</p>
 </blockquote>
 
 <p>As data scientists, we do pretty cool things. We predict, we personalise, we automate. However, at the end of the day we&rsquo;re here because we deliver value, and if anything is more valuable than a great model, it&rsquo;s a great model that runs itself.</p>
@@ -116,7 +116,7 @@ ga('send', 'pageview');
 
 <p>This is the smallest gripe here, but it&rsquo;s an important one. Bad dependency management is the kind of small thing which can cause big problems that are a headache to troubleshoot. Within R packages, this is handled by a <code>Depends</code> field, but for an R application intended for running and not importing, packaging feels like an awkward solution. Projects like <a href="https://github.com/rstudio/packrat">packrat</a> take a step towards fixing this, by mimicking <code>virtualenv</code> in python, but the real issue is that, in R, packages have to be installed from inside the interpreter.</p>
 
-<p>This is bad. For one, the default <code>install.packages</code> doesn&rsquo;t support installing a particular version of a package. If you need to do that (i.e. if a package update introduces non backwards-compatible changes that break your code) <a href="http://stackoverflow.com/questions/17082341/installing-older-version-of-r-package">you need to install another package</a>, specifically <code>devtools</code>, and call a completely different install function <code>install.versions</code>. Crazy! The functionality is technically there, but it&rsquo;s not surfaced in the core language, which is a bit of a theme with R.</p>
+<p>This is bad. For one, the default <code>install.packages</code> doesn&rsquo;t support installing a particular version of a package. If you need to do that (i.e. if a package update introduces non backwards-compatible changes that break your code) <a href="http://stackoverflow.com/questions/17082341/installing-older-version-of-r-package">you need to import another package</a>, specifically <code>devtools</code>, and call a completely different install function <code>install.versions</code>. Crazy! The functionality is technically there, but it&rsquo;s not surfaced in the core language, which is a bit of a theme with R.</p>
 
 <p>Like I said, this is a small gripe, and more a stylistic one, but it makes deploying R code a pain, and makes for <a href="https://github.com/glamp/r-docker/blob/master/Dockerfile">really ugly Dockerfiles</a>.</p>
 
@@ -151,7 +151,7 @@ ga('send', 'pageview');
 
 <p>When this is what you&rsquo;re writing all day, building up the habit of testing code isn&rsquo;t easy.</p>
 
-<p>The second is that when data scientists are writing production systems, they usually depend on a fair bit of external tooling. My first experience with this was writing an API to expose our geographically linked data. The application relied on the database to efficiently match geographic boundaries, so I was thrown right in the deep end, writing integration tests for a specific database extension. In the end I got it done, because writing database backed applications in python is par for the course, so python&rsquo;s test framwork <code>pytest</code> made writing those tests easy.</p>
+<p>The second is that when data scientists are writing production systems, they usually depend on a fair bit of external tooling. My first experience with this was writing an API to expose some geographically linked data we were using in a few different places. The application relied on the database to efficiently match geographic boundaries, so I was thrown right in the deep end, writing integration tests for a specific database extension. In the end I got it done, because writing database backed applications in python is par for the course, so python&rsquo;s test framwork <code>pytest</code> made writing those tests easy.</p>
 
 <p>This is not the case in R, in which the <code>RUnit</code> test framework is sort of it. Its lack of flexibility is one thing but, like most R packages, it is allergic to decent documentation, providing only a <a href="https://cran.r-project.org/web/packages/RUnit/RUnit.pdf">pdf</a> of function references. Compare this to <a href="http://doc.pytest.org/en/latest/">pytest</a>, which has copious examples with proper syntax highlighting, and a navigation system beyond a table of contents, yeesh.</p>
 
@@ -174,6 +174,20 @@ ga('send', 'pageview');
 </div>
 
         <footer class="post-footer clearfix">
+    
+        <p class="post-tags">
+            <span>Tagged:</span>
+            
+            
+                <a href="/tags/r/">R</a>, 
+            
+                <a href="/tags/production/">production</a>, 
+            
+                <a href="/tags/testing/">testing</a>, 
+            
+                <a href="/tags/apis/">APIs</a>
+            
+        </p>
     
 
     <div class="share">
@@ -207,7 +221,7 @@ ga('send', 'pageview');
     <div class="comments">
         <div id="disqus_thread"></div>
 <script type="text/javascript">
-    var disqus_shortname = 'XXX';
+    var disqus_shortname = 'leandataguy';
     var disqus_identifier = 'http:\/\/leandataguy.com\/2017\/02\/03\/stop-using-r\/';
     var disqus_title = 'Stop Using R';
     var disqus_url = 'http:\/\/leandataguy.com\/2017\/02\/03\/stop-using-r\/';

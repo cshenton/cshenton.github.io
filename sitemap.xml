@@ -17,6 +17,12 @@
   </url>
   
   <url>
+    <loc>http://leandataguy.com/tags/apis/</loc>
+    <lastmod>2017-02-03T20:25:49+11:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>http://leandataguy.com/</loc>
     <lastmod>2017-02-03T23:45:58+11:00</lastmod>
     <priority>0</priority>
@@ -30,6 +36,29 @@
   
   <url>
     <loc>http://leandataguy.com/post/</loc>
+    <lastmod>2017-02-03T20:25:49+11:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://leandataguy.com/tags/production/</loc>
+    <lastmod>2017-02-03T20:25:49+11:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://leandataguy.com/tags/r/</loc>
+    <lastmod>2017-02-03T20:25:49+11:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://leandataguy.com/tags/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://leandataguy.com/tags/testing/</loc>
     <lastmod>2017-02-03T20:25:49+11:00</lastmod>
     <priority>0</priority>
   </url>

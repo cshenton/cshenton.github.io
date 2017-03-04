@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://leandataguy.com/2017/03/04/whats-the-warehouse-for/</loc>
+    <lastmod>2017-03-04T16:30:51+11:00</lastmod>
+  </url>
+  
+  <url>
     <loc>http://leandataguy.com/page/about/</loc>
     <lastmod>2017-02-03T23:45:58+11:00</lastmod>
   </url>
@@ -23,8 +28,38 @@
   </url>
   
   <url>
+    <loc>http://leandataguy.com/tags/architecture/</loc>
+    <lastmod>2017-03-04T16:30:51+11:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://leandataguy.com/tags/coupling/</loc>
+    <lastmod>2017-03-04T16:30:51+11:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://leandataguy.com/tags/data-engineering/</loc>
+    <lastmod>2017-03-04T16:30:51+11:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://leandataguy.com/tags/data-lake/</loc>
+    <lastmod>2017-03-04T16:30:51+11:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://leandataguy.com/tags/data-warehouse/</loc>
+    <lastmod>2017-03-04T16:30:51+11:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>http://leandataguy.com/</loc>
-    <lastmod>2017-02-03T23:45:58+11:00</lastmod>
+    <lastmod>2017-03-04T16:30:51+11:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -36,7 +71,7 @@
   
   <url>
     <loc>http://leandataguy.com/post/</loc>
-    <lastmod>2017-02-03T20:25:49+11:00</lastmod>
+    <lastmod>2017-03-04T16:30:51+11:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -49,6 +84,12 @@
   <url>
     <loc>http://leandataguy.com/tags/r/</loc>
     <lastmod>2017-02-03T20:25:49+11:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://leandataguy.com/tags/services/</loc>
+    <lastmod>2017-03-04T16:30:51+11:00</lastmod>
     <priority>0</priority>
   </url>
   

@@ -4,9 +4,8 @@
         <meta name="google-site-verification" content="D32gxomwQXNWZYIlG8Lk6iVuPNduhXgpVCOmnJYKEno" />
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>What&#39;s the Data Warehouse For? &middot; Charles Shenton</title>
-        <meta name="description" content="Data Plumbing From startups to enterprise, the term &ldquo;Data Warehouse&rdquo; has a sort of hallowed quality to it. It is, after all, where all that valuable data foolishly discarded by operational systems ends up. It&rsquo;s the only place to get a 360 degree customer view in an increasingly service-oriented world, and can even be used by those mysterious data scientists, or (if we&rsquo;re so lucky), the BIG Data.
-And whether you call it a data warehouse, a data lake, or a series of data marts; whether you&rsquo;re getting the data there by ETL or ELT, the pattern&rsquo;s much the same anywhere you go:">
+        <title>The Data Warehouse is an Antipattern &middot; Charles Shenton</title>
+        <meta name="description" content="Data Plumbing From startups to enterprise, the term &ldquo;Data Warehouse&rdquo; has a sort of hallowed quality to it. It is, after all, where all that valuable data foolishly discarded by operational systems ends up. It&rsquo;s the only place to get a 360 degree customer view in an increasingly service-oriented world, and can even be used by those mysterious data scientists, or (if we&rsquo;re so lucky), for doing BIG Data.">
         <meta name="HandheldFriendly" content="True">
         <meta name="MobileOptimized" content="320">
         <meta name="generator" content="Hugo 0.18.1" />
@@ -78,7 +77,7 @@ ga('send', 'pageview');
 <div class="container">
     <article class="post-container" itemscope="" itemtype="http://schema.org/BlogPosting">
         <header class="post-header">
-    <h1 class="post-title" itemprop="name headline">What&#39;s the Data Warehouse For?</h1>
+    <h1 class="post-title" itemprop="name headline">The Data Warehouse is an Antipattern</h1>
     
     <p class="post-date">
         <span>Published <time datetime="2017-03-04" itemprop="datePublished">Sat, Mar 4, 2017</time></span>
@@ -98,14 +97,14 @@ ga('send', 'pageview');
 
 <h1 id="data-plumbing">Data Plumbing</h1>
 
-<p>From startups to enterprise, the term &ldquo;Data Warehouse&rdquo; has a sort of hallowed quality to it. It is, after all, where all that <em>valuable</em> data foolishly discarded by operational systems ends up. It&rsquo;s the only place to get a <em>360 degree customer view</em> in an increasingly service-oriented world, and can even be used by those mysterious data scientists, or (if we&rsquo;re so lucky), the <strong>BIG</strong> Data.</p>
+<p>From startups to enterprise, the term &ldquo;Data Warehouse&rdquo; has a sort of hallowed quality to it. It is, after all, where all that <em>valuable</em> data foolishly discarded by operational systems ends up. It&rsquo;s the only place to get a <em>360 degree customer view</em> in an increasingly service-oriented world, and can even be used by those mysterious data scientists, or (if we&rsquo;re so lucky), for doing <strong>BIG</strong> Data.</p>
 
 <p>And whether you call it a data warehouse, a data lake, or a series of data marts; whether you&rsquo;re getting the data there by ETL or ELT, the pattern&rsquo;s much the same anywhere you go:</p>
 
 <ul>
 <li>Grab the binary logs / table extracts from your production databases</li>
 <li>Grab all the weblogs and 3rd party SaaS data</li>
-<li>(optional) transform it into a mostly logic data model</li>
+<li>(optional) transform it into a mostly logical data model</li>
 <li>Put it all in one place so it can be queried together</li>
 </ul>
 
@@ -123,11 +122,11 @@ ga('send', 'pageview');
 
 <p>This means that each service knows which resources and message schemas its consumers depend on, which enables it to make changes and add functionality with impunity, so long as that contract is maintained. This means that underlying database schemas, and even database and application runtimes can be changed without breaking anything.</p>
 
-<p>That is, except the data warehouse. By directly coupling to the database rather than the API, the warehouse breaks that service contract and makes itself more fragile as a service.</p>
+<p>Without breaking anything, that is, except the data warehouse. By directly coupling to the database rather than the API, the warehouse breaks that service contract and makes itself more fragile as a service.</p>
 
 <h1 id="what-s-to-be-done">What&rsquo;s to be Done?</h1>
 
-<p>This is a bad situation. In my current job, I&rsquo;ve worked with analytics teams whose predictive models were frequently being broken by the very department that relied on them, and the root cause was that their source data was too tightly coupled to that department&rsquo;s service. However, I&rsquo;ve also seen teams running analytical queries against operational databases, which is at best slow and at worse will break things.</p>
+<p>This is a bad situation. In my current job, I&rsquo;ve worked with analytics teams whose predictive models were frequently being broken by the very department that relied on them, and the root cause was that their source data was too tightly coupled to that department&rsquo;s application database. However, I&rsquo;ve also seen teams running analytical queries against operational databases, which is at best slow and at worse will break things.</p>
 
 <p>And the goals of warehousing data are good ones:</p>
 
@@ -167,7 +166,7 @@ ga('send', 'pageview');
 
     <div class="share">
         
-            <a class="icon-twitter" href="https://twitter.com/share?text=What%27s%20the%20Data%20Warehouse%20For%3f&url=http%3a%2f%2fleandataguy.com%2f2017%2f03%2f04%2fwhats-the-warehouse-for%2f"
+            <a class="icon-twitter" href="https://twitter.com/share?text=The%20Data%20Warehouse%20is%20an%20Antipattern&url=http%3a%2f%2fleandataguy.com%2f2017%2f03%2f04%2fwhats-the-warehouse-for%2f"
                 onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
                 <i class="fa fa-twitter"></i>
                 <span class="hidden">Twitter</span>
@@ -198,7 +197,7 @@ ga('send', 'pageview');
 <script type="text/javascript">
     var disqus_shortname = 'leandataguy';
     var disqus_identifier = 'http:\/\/leandataguy.com\/2017\/03\/04\/whats-the-warehouse-for\/';
-    var disqus_title = 'What\x27s the Data Warehouse For?';
+    var disqus_title = 'The Data Warehouse is an Antipattern';
     var disqus_url = 'http:\/\/leandataguy.com\/2017\/03\/04\/whats-the-warehouse-for\/';
 
     (function() {

@@ -10,7 +10,7 @@
     <atom:link href="http://leandataguy.com/tags/data-lake/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
-      <title>What&#39;s the Data Warehouse For?</title>
+      <title>The Data Warehouse is an Antipattern</title>
       <link>http://leandataguy.com/2017/03/04/whats-the-warehouse-for/</link>
       <pubDate>Sat, 04 Mar 2017 16:30:51 +1100</pubDate>
       
@@ -19,14 +19,14 @@
 
 &lt;h1 id=&#34;data-plumbing&#34;&gt;Data Plumbing&lt;/h1&gt;
 
-&lt;p&gt;From startups to enterprise, the term &amp;ldquo;Data Warehouse&amp;rdquo; has a sort of hallowed quality to it. It is, after all, where all that &lt;em&gt;valuable&lt;/em&gt; data foolishly discarded by operational systems ends up. It&amp;rsquo;s the only place to get a &lt;em&gt;360 degree customer view&lt;/em&gt; in an increasingly service-oriented world, and can even be used by those mysterious data scientists, or (if we&amp;rsquo;re so lucky), the &lt;strong&gt;BIG&lt;/strong&gt; Data.&lt;/p&gt;
+&lt;p&gt;From startups to enterprise, the term &amp;ldquo;Data Warehouse&amp;rdquo; has a sort of hallowed quality to it. It is, after all, where all that &lt;em&gt;valuable&lt;/em&gt; data foolishly discarded by operational systems ends up. It&amp;rsquo;s the only place to get a &lt;em&gt;360 degree customer view&lt;/em&gt; in an increasingly service-oriented world, and can even be used by those mysterious data scientists, or (if we&amp;rsquo;re so lucky), for doing &lt;strong&gt;BIG&lt;/strong&gt; Data.&lt;/p&gt;
 
 &lt;p&gt;And whether you call it a data warehouse, a data lake, or a series of data marts; whether you&amp;rsquo;re getting the data there by ETL or ELT, the pattern&amp;rsquo;s much the same anywhere you go:&lt;/p&gt;
 
 &lt;ul&gt;
 &lt;li&gt;Grab the binary logs / table extracts from your production databases&lt;/li&gt;
 &lt;li&gt;Grab all the weblogs and 3rd party SaaS data&lt;/li&gt;
-&lt;li&gt;(optional) transform it into a mostly logic data model&lt;/li&gt;
+&lt;li&gt;(optional) transform it into a mostly logical data model&lt;/li&gt;
 &lt;li&gt;Put it all in one place so it can be queried together&lt;/li&gt;
 &lt;/ul&gt;
 
@@ -44,11 +44,11 @@
 
 &lt;p&gt;This means that each service knows which resources and message schemas its consumers depend on, which enables it to make changes and add functionality with impunity, so long as that contract is maintained. This means that underlying database schemas, and even database and application runtimes can be changed without breaking anything.&lt;/p&gt;
 
-&lt;p&gt;That is, except the data warehouse. By directly coupling to the database rather than the API, the warehouse breaks that service contract and makes itself more fragile as a service.&lt;/p&gt;
+&lt;p&gt;Without breaking anything, that is, except the data warehouse. By directly coupling to the database rather than the API, the warehouse breaks that service contract and makes itself more fragile as a service.&lt;/p&gt;
 
 &lt;h1 id=&#34;what-s-to-be-done&#34;&gt;What&amp;rsquo;s to be Done?&lt;/h1&gt;
 
-&lt;p&gt;This is a bad situation. In my current job, I&amp;rsquo;ve worked with analytics teams whose predictive models were frequently being broken by the very department that relied on them, and the root cause was that their source data was too tightly coupled to that department&amp;rsquo;s service. However, I&amp;rsquo;ve also seen teams running analytical queries against operational databases, which is at best slow and at worse will break things.&lt;/p&gt;
+&lt;p&gt;This is a bad situation. In my current job, I&amp;rsquo;ve worked with analytics teams whose predictive models were frequently being broken by the very department that relied on them, and the root cause was that their source data was too tightly coupled to that department&amp;rsquo;s application database. However, I&amp;rsquo;ve also seen teams running analytical queries against operational databases, which is at best slow and at worse will break things.&lt;/p&gt;
 
 &lt;p&gt;And the goals of warehousing data are good ones:&lt;/p&gt;
 

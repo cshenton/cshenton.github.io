@@ -1,6 +1,7 @@
 import * as THREE from "./three/build/three.module.js";
 import { WEBGL } from './three/examples/jsm/WebGL.js';
 import { OrbitControls } from './three/examples/jsm/controls/OrbitControls.js';
+import { GLTFLoader } from './three/examples/jsm/loaders/GLTFLoader.js';
 
 function main() {
     if (!WEBGL.isWebGLAvailable()) {
@@ -9,9 +10,11 @@ function main() {
         return;
     }
 
+    const clock = new THREE.Clock();
+
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0xcce0ff);
-    scene.fog = new THREE.Fog(0xcce0ff, 25, 100);
+    scene.background = new THREE.Color(0x00041c);
+    // scene.fog = new THREE.Fog(0xcce0ff, 250, 1000);
 
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 
@@ -20,24 +23,22 @@ function main() {
     document.body.appendChild(renderer.domElement);
 
     const controls = new OrbitControls(camera, renderer.domElement);
-    controls.target.set(0, 0, 0);
+    controls.target.set(0, 50, 0);
     controls.update();
     controls.enablePan = false;
     controls.enableDamping = true;
 
-    const geometry = new THREE.DodecahedronGeometry();
-    const material = new THREE.MeshPhysicalMaterial({ color: 0x003cff, roughness: 0.1, clearcoat: 1.0 });
-    const cube = new THREE.Mesh(geometry, material);
-    scene.add(cube);
-
-    // const ground = new THREE.Mesh(new THREE.PlaneBufferGeometry(100, 100), new THREE.MeshPhongMaterial({ color: 0x999999, depthWrite: false }));
+    // const ground = new THREE.Mesh(new THREE.PlaneBufferGeometry(10000, 10000), new THREE.MeshPhongMaterial({ color: 0x999999, depthWrite: false }));
     // ground.rotation.x = - Math.PI / 2;
     // ground.position.y = -1.0;
     // ground.receiveShadow = true;
     // scene.add(ground);
 
+    const ambient_light = new THREE.AmbientLight( 0x404040 ); // soft white light
+    scene.add( ambient_light );
+
     const light = new THREE.DirectionalLight(0xdfebff, 1);
-    light.position.set(50, 200, 100);
+    light.position.set(-500, 2000, 1000);
     light.position.multiplyScalar(1.3);
     light.castShadow = true;
     light.shadow.mapSize.width = 1024;
@@ -51,35 +52,56 @@ function main() {
     light.shadow.camera.far = 1000;
     scene.add(light);
 
-    camera.position.z = 5;
+    camera.position.z = 100;
 
-    const vertices = [];
-    for (let i = 0; i < 10000; i++) {
-        const x = THREE.MathUtils.randFloatSpread(100);
-        const y = THREE.MathUtils.randFloatSpread(100);
-        const z = THREE.MathUtils.randFloatSpread(100);
-        vertices.push(x, y, z);
-    }
+    let model, skeleton, mixer;
+    const loader = new GLTFLoader();
+    loader.load('models/Flair.glb', function (gltf) {
+        model = gltf.scene;
+        scene.add(model);
 
-    const pointgeo = new THREE.BufferGeometry();
-    pointgeo.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+        model.traverse(function (object) {
+            if (object.isMesh) object.castShadow = true;
+        });
 
-    const pointmat = new THREE.PointsMaterial({ size: 0.25, color: 0xfcba03 });
-    const points = new THREE.Points(pointgeo, pointmat);
-    scene.add(points);
+        skeleton = new THREE.SkeletonHelper(model);
+        skeleton.visible = false;
+        scene.add(skeleton);
 
-    window.onresize = function reportWindowSize() {
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-    }
+        mixer = new THREE.AnimationMixer(model);
+        const action = mixer.clipAction( gltf.animations[0] );
+        action.play();
 
-    renderer.setAnimationLoop(function () {
-        cube.rotation.x += 0.01;
-        cube.rotation.y += 0.01;
-        controls.update();
-        renderer.render(scene, camera);
+
+        const vertices = [];
+        for (let i = 0; i < 10000; i++) {
+            const x = THREE.MathUtils.randFloatSpread(1000);
+            const y = THREE.MathUtils.randFloatSpread(1000);
+            const z = THREE.MathUtils.randFloatSpread(1000);
+            vertices.push(x, y, z);
+        }
+    
+        const pointgeo = new THREE.BufferGeometry();
+        pointgeo.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+    
+        const pointmat = new THREE.PointsMaterial({ size: 0.35, color: 0xfff7c7 });
+        const points = new THREE.Points(pointgeo, pointmat);
+        scene.add(points);
+
+        window.onresize = function reportWindowSize() {
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+        }
+    
+        renderer.setAnimationLoop(function () {
+            controls.update();
+            mixer.update(clock.getDelta() / 2.0);
+            renderer.render(scene, camera);
+        });
     });
+
+
 }
 
 main()

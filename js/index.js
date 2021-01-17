@@ -10,6 +10,9 @@ function main() {
     }
 
     const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0xcce0ff);
+    scene.fog = new THREE.Fog(0xcce0ff, 500, 10000);
+
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -23,9 +26,27 @@ function main() {
     controls.enableDamping = true;
 
     const geometry = new THREE.BoxGeometry();
-    const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+    const material = new THREE.MeshLambertMaterial({ color: 0x00ff00 });
     const cube = new THREE.Mesh(geometry, material);
     scene.add(cube);
+
+    const light = new THREE.DirectionalLight(0xdfebff, 1);
+    light.position.set(50, 200, 100);
+    light.position.multiplyScalar(1.3);
+    light.castShadow = true;
+    light.shadow.mapSize.width = 1024;
+    light.shadow.mapSize.height = 1024;
+
+    const d = 300;
+    light.shadow.camera.left = - d;
+    light.shadow.camera.right = d;
+    light.shadow.camera.top = d;
+    light.shadow.camera.bottom = - d;
+
+    light.shadow.camera.far = 1000;
+
+    scene.add(light);
+
 
     camera.position.z = 5;
 

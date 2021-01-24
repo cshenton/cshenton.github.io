@@ -26,8 +26,8 @@ function main() {
     controls.update();
     controls.enablePan = false;
 
-    const ambient_light = new THREE.AmbientLight( 0xFFFFFF, 0.5 ); // soft white light
-    scene.add( ambient_light );
+    const ambient_light = new THREE.AmbientLight(0xFFFFFF, 0.5); // soft white light
+    scene.add(ambient_light);
 
     const light = new THREE.DirectionalLight(0xdfebff, 3.0);
     light.position.set(-500, 2000, 1000);
@@ -46,7 +46,7 @@ function main() {
 
     camera.position.z = 100;
 
-    let model, skeleton, mixer;
+    let model, mixer;
     const loader = new GLTFLoader();
     loader.load('models/Flair.glb', function (gltf) {
         model = gltf.scene;
@@ -56,48 +56,42 @@ function main() {
             if (object.isMesh) object.castShadow = true;
         });
 
-        skeleton = new THREE.SkeletonHelper(model);
-        skeleton.visible = false;
-        scene.add(skeleton);
-
         mixer = new THREE.AnimationMixer(model);
-        const action = mixer.clipAction( gltf.animations[0] );
+        const action = mixer.clipAction(gltf.animations[0]);
         action.play();
-
-
-        const vertices = [];
-        for (let i = 0; i < 10000; i++) {
-            const x = THREE.MathUtils.randFloatSpread(1000);
-            const y = THREE.MathUtils.randFloatSpread(1000);
-            const z = THREE.MathUtils.randFloatSpread(1000);
-            vertices.push(x, y, z);
-        }
-    
-        const pointgeo = new THREE.BufferGeometry();
-        pointgeo.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
-    
-        const pointmat = new THREE.PointsMaterial({ size: 0.35, color: 0xfff7c7 });
-        const points = new THREE.Points(pointgeo, pointmat);
-        scene.add(points);
-
-        window.onresize = function reportWindowSize() {
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-        }
-    
-        renderer.setAnimationLoop(function () {
-            controls.update();
-            mixer.update(clock.getDelta() / 2.0);
-            for (let i = 0; i < 30000; i++) {
-                vertices[i] += THREE.MathUtils.randFloatSpread(1)
-            }
-            pointgeo.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
-            renderer.render(scene, camera);
-        });
     });
 
 
+    const vertices = [];
+    for (let i = 0; i < 10000; i++) {
+        const x = THREE.MathUtils.randFloatSpread(1000);
+        const y = THREE.MathUtils.randFloatSpread(1000);
+        const z = THREE.MathUtils.randFloatSpread(1000);
+        vertices.push(x, y, z);
+    }
+
+    const pointgeo = new THREE.BufferGeometry();
+    pointgeo.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+
+    const pointmat = new THREE.PointsMaterial({ size: 0.35, color: 0xfff7c7 });
+    const points = new THREE.Points(pointgeo, pointmat);
+    scene.add(points);
+
+    window.onresize = function reportWindowSize() {
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+    }
+
+    renderer.setAnimationLoop(function () {
+        controls.update();
+        if (mixer) mixer.update(clock.getDelta() / 2.0);
+        for (let i = 0; i < 30000; i++) {
+            vertices[i] += THREE.MathUtils.randFloatSpread(1)
+        }
+        pointgeo.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+        renderer.render(scene, camera);
+    });
 }
 
 main()

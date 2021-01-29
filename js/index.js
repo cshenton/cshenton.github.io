@@ -1,7 +1,8 @@
 import * as THREE from "./three/build/three.module.js";
 import { WEBGL } from './three/examples/jsm/WebGL.js';
 import { OrbitControls } from './three/examples/jsm/controls/OrbitControls.js';
-// import { GLTFLoader } from './three/examples/jsm/loaders/GLTFLoader.js';
+import { FBXLoader } from './three/examples/jsm/loaders/FBXLoader.js';
+
 
 let Grid = {};
 
@@ -20,7 +21,7 @@ Grid.init = function (lower, upper, size, capacity) {
         capacity: capacity,
 
         counts: new Int8Array(dims.x * dims.y * dims.z),
-        values: new Int32Array(dims.x * dims.y * dims.z * capacity),
+        values: new Uint32Array(dims.x * dims.y * dims.z * capacity),
     };
 };
 
@@ -42,6 +43,8 @@ Grid.insert = function (grid, position, id) {
         grid.values[cell * grid.capacity + count] = id;
         grid.counts[cell] += 1;
     }
+
+    return cell;
 };
 
 
@@ -50,12 +53,13 @@ let Flock = {};
 Flock.initBirds = function (length) {
     const positions = new Float32Array(3 * length);
     const directions = new Float32Array(3 * length);
+    const cells = new Int32Array(3 * length);
 
     let pos = new THREE.Vector3();
     let dir = new THREE.Vector3();
 
     for (let i = 0; i < length; i++) {
-        pos.random().subScalar(0.5);
+        pos.random().subScalar(0.5).multiplyScalar(1000.0);
         dir.random().subScalar(0.5).normalize();
         pos.toArray(positions, 3 * i);
         dir.toArray(directions, 3 * i);
@@ -65,23 +69,24 @@ Flock.initBirds = function (length) {
         length: length,
         positions: positions,
         directions: directions,
+        cells: cells,
     };
 };
 
 Flock.initGrid = function () {
-    const lower = new THREE.Vector3(-0.5, -0.5, -0.5);
-    const upper = new THREE.Vector3(0.5, 0.5, 0.5);
-    const size = new THREE.Vector3(0.1, 0.1, 0.1);
-    return Grid.init(lower, upper, size, 10);
+    const lower = new THREE.Vector3(-0.5, -0.5, -0.5).multiplyScalar(1000.0);
+    const upper = new THREE.Vector3(0.5, 0.5, 0.5).multiplyScalar(1000.0);
+    const size = new THREE.Vector3(0.1, 0.1, 0.1).multiplyScalar(1000.0);
+    return Grid.init(lower, upper, size, 8);
 }
 
 Flock.initParams = function () {
     return {
-        speed: 0.003,
+        speed: 3.0,
 
-        separationRadius: 0.05,
-        alignmentRadius: 0.1,
-        cohesionRadius: 0.1,
+        separationRadius: 50.0,
+        alignmentRadius: 100.0,
+        cohesionRadius: 100.0,
 
         separationStrength: 2.0,
         alignmentStrength: 1.0,
@@ -95,7 +100,7 @@ Flock.index = function (grid, birds) {
     let pos = new THREE.Vector3();
     for (let i = 0; i < birds.length; i += 1) {
         pos.fromArray(birds.positions, 3 * i);
-        Grid.insert(grid, pos, i);
+        birds.cells[i] = Grid.insert(grid, pos, i);
     }
 };
 
@@ -105,17 +110,14 @@ Flock.interact = function (grid, birds, params) {
     let dir_i = new THREE.Vector3();
     let dir_j = new THREE.Vector3();
 
+    let dir_ij = new THREE.Vector3();
     let vec = new THREE.Vector3();
 
     for (let i = 0; i < birds.length; i++) {
         pos_i.fromArray(birds.positions, 3 * i);
         dir_i.fromArray(birds.directions, 3 * i);
 
-        const x = Math.ceil((pos_i.x - grid.lower.x) / grid.size.x);
-        const y = Math.ceil((pos_i.y - grid.lower.y) / grid.size.y);
-        const z = Math.ceil((pos_i.z - grid.lower.z) / grid.size.z);
-
-        const cell = x * grid.dims.y * grid.dims.z + y * grid.dims.z + z;
+        const cell = birds.cells[i];
         const count = grid.counts[cell];
         const start = cell * grid.capacity;
         const end = cell * grid.capacity + count;
@@ -127,25 +129,17 @@ Flock.interact = function (grid, birds, params) {
             pos_j.fromArray(birds.positions, 3 * j);
             dir_j.fromArray(birds.directions, 3 * j);
 
-            const dist = pos_i.distanceTo(pos_j);
+            dir_ij.subVectors(pos_i, pos_j);
+            const dist = dir_ij.length();
+            dir_ij.divideScalar(dist);
 
-            // Separation
-            if (dist < params.separationRadius) {
-                vec.subVectors(pos_i, pos_j).normalize();
-                dir_i.add(vec.multiplyScalar(params.separationStrength));
-            }
+            const separation = params.separationStrength * (dist < params.separationRadius);
+            const alignment = params.alignmentStrength * (dist < params.alignmentRadius);
+            const cohesion = params.cohesionStrength * (dist < params.cohesionRadius);
 
-            // Alignment
-            if (dist < params.alignmentRadius) {
-                vec.copy(dir_j);
-                dir_i.add(vec.multiplyScalar(params.alignmentStrength));
-            }
-
-            // Cohesion
-            if (dist < params.cohesionRadius) {
-                vec.subVectors(pos_j, pos_i).normalize();
-                dir_i.add(vec.multiplyScalar(params.cohesionStrength))
-            }
+            dir_i.add(vec.copy(dir_ij).multiplyScalar(separation));
+            dir_i.add(vec.copy(dir_j).multiplyScalar(alignment));
+            dir_i.add(vec.copy(dir_ij).multiplyScalar(-cohesion));
         }
 
         dir_i.normalize();
@@ -163,23 +157,18 @@ Flock.move = function (birds, params) {
         dir.multiplyScalar(params.speed);
         pos.add(dir);
 
-        if (pos.x > 0.5) pos.x -= 1.0;
-        if (pos.y > 0.5) pos.y -= 1.0;
-        if (pos.z > 0.5) pos.z -= 1.0;
-        if (pos.x < -0.5) pos.x += 1.0;
-        if (pos.y < -0.5) pos.y += 1.0;
-        if (pos.z < -0.5) pos.z += 1.0;
+        pos.x += 1000.0 * (pos.x < -500.0) - 1000.0 * (pos.x > 500.0);
+        pos.y += 1000.0 * (pos.y < -500.0) - 1000.0 * (pos.y > 500.0);
+        pos.z += 1000.0 * (pos.z < -500.0) - 1000.0 * (pos.z > 500.0);
 
         pos.toArray(birds.positions, 3 * i);
     }
 };
 
-
-
 Flock.init = function () {
     return {
         grid: Flock.initGrid(),
-        birds: Flock.initBirds(30000),
+        birds: Flock.initBirds(50000),
         params: Flock.initParams(),
     };
 };
@@ -188,21 +177,28 @@ Flock.update = function (flock) {
     Flock.index(flock.grid, flock.birds);
     Flock.interact(flock.grid, flock.birds, flock.params);
     Flock.move(flock.birds, flock.params);
+};
+
+
+const updateInstances = function (flock, instances) {
+    let pos = new THREE.Vector3();
+    let dir = new THREE.Vector3();
+    let scale = new THREE.Vector3(1, 1, 1);
+    let quat = new THREE.Quaternion();
+    let mat = new THREE.Matrix4();
+
+    for (let i = 0; i < flock.birds.length; i++) {
+        pos.fromArray(flock.birds.positions, 3 * i);
+        dir.fromArray(flock.birds.directions, 3 * i);
+        quat.setFromAxisAngle(dir, Math.PI);
+
+        mat.compose(pos, quat, scale);
+        instances.setMatrixAt(i, mat);
+    }
+
+    instances.instanceMatrix.needsUpdate = true;
 }
 
-
-// const updateInstances = function (flock, instances) {
-//     let pos = new THREE.Vector3();
-//     let mat = new THREE.Matrix4();
-
-//     for (let i = 0; i < flock.length; i++) {
-//         instances.getMatrixAt(i, mat);
-//         pos.fromArray(flock.positions, 3 * i);
-//         mat.setPosition(pos);
-//         // set rotation using direction
-//         instances.setMatrixAt(i, mat);
-//     }
-// }
 
 const main = function () {
     if (!WEBGL.isWebGLAvailable()) {
@@ -219,7 +215,7 @@ const main = function () {
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0x00041c);
 
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 10000);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -248,14 +244,17 @@ const main = function () {
     light.shadow.camera.far = 1000;
     scene.add(light);
 
-    camera.position.z = 1;
+    camera.position.z = 1000;
 
-    const pointgeo = new THREE.BufferGeometry();
-    pointgeo.setAttribute('position', new THREE.Float32BufferAttribute(flock.birds.positions, 3));
+    const loader = new FBXLoader();
 
-    const pointmat = new THREE.PointsMaterial({ size: 0.001, color: 0xfff7c7 });
-    const points = new THREE.Points(pointgeo, pointmat);
-    scene.add(points);
+    let mesh;
+    loader.load("models/Koi_Tri.fbx", function (fbx) {
+        console.log(fbx);
+        const geometry = fbx.children[0].geometry;
+        mesh = new THREE.InstancedMesh(geometry, new THREE.MeshStandardMaterial({ color: 0xffff00 }), 50000);
+        scene.add(mesh);
+    });
 
     window.addEventListener('resize', function () {
         renderer.setSize(window.innerWidth, window.innerHeight);
@@ -266,7 +265,7 @@ const main = function () {
     renderer.setAnimationLoop(function () {
         controls.update();
         Flock.update(flock);
-        pointgeo.setAttribute('position', new THREE.Float32BufferAttribute(flock.birds.positions, 3));
+        if (mesh) updateInstances(flock, mesh);
         renderer.render(scene, camera);
     });
 };

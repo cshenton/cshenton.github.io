@@ -1,7 +1,7 @@
 import * as THREE from "./three/build/three.module.js";
-import { WEBGL } from './three/examples/jsm/WebGL.js';
-import { OrbitControls } from './three/examples/jsm/controls/OrbitControls.js';
-import { FBXLoader } from './three/examples/jsm/loaders/FBXLoader.js';
+import { WEBGL } from "./three/examples/jsm/WebGL.js";
+import { OrbitControls } from "./three/examples/jsm/controls/OrbitControls.js";
+import { FBXLoader } from "./three/examples/jsm/loaders/FBXLoader.js";
 
 
 let Grid = {};
@@ -204,7 +204,7 @@ const updateInstances = function (flock, instances) {
 const main = function () {
     if (!WEBGL.isWebGLAvailable()) {
         const warning = WEBGL.getWebGLErrorMessage();
-        document.getElementById('container').appendChild(warning);
+        document.getElementById("container").appendChild(warning);
         return;
     }
 
@@ -245,31 +245,50 @@ const main = function () {
     light.shadow.camera.far = 1000;
     scene.add(light);
 
-    camera.position.z = 1000;
-
-    const loader = new FBXLoader();
+    camera.position.x = -300;
+    camera.position.y = -400;
+    camera.position.z = -300;
 
     let mesh;
-    loader.load("models/Koi_Tri.fbx", function (fbx) {
+    let running = true;
+
+    const fbx_loader = new FBXLoader();
+    fbx_loader.load("models/Koi_Tri.fbx", function (fbx) {
         console.log(fbx);
         const geometry = fbx.children[0].geometry;
-        mesh = new THREE.InstancedMesh(geometry, new THREE.MeshStandardMaterial({ color: 0xbababa }), 32768);
+        mesh = new THREE.InstancedMesh(geometry, new THREE.MeshStandardMaterial({ color: 0xbababa, roughness: 0.1 }), 32768);
         let color = new THREE.Vector3();
-        for (let i=0; i<mesh.count; i++) {
+        for (let i = 0; i < mesh.count; i++) {
             mesh.setColorAt(i, color.random());
         }
         scene.add(mesh);
     });
 
-    window.addEventListener('resize', function () {
+    const env_loader = new THREE.TextureLoader();
+    env_loader.load("textures/underwater.jpg", function (texture) {
+        const rt = new THREE.WebGLCubeRenderTarget(texture.image.height);
+        rt.fromEquirectangularTexture(renderer, texture);
+        scene.background = rt;
+
+        const gen = new THREE.PMREMGenerator(renderer);
+        mesh.material.envMap = gen.fromEquirectangular(texture).texture;
+    });
+
+    window.addEventListener("resize", function () {
         renderer.setSize(window.innerWidth, window.innerHeight);
         camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
     });
 
+    window.addEventListener("keydown", function (event) {
+        if (event.code == "Space") {
+            running = !running;
+        }
+    });
+
     renderer.setAnimationLoop(function () {
         controls.update();
-        Flock.update(flock);
+        if (running) Flock.update(flock);
         if (mesh) updateInstances(flock, mesh);
         renderer.render(scene, camera);
     });

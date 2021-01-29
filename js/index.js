@@ -168,7 +168,7 @@ Flock.move = function (birds, params) {
 Flock.init = function () {
     return {
         grid: Flock.initGrid(),
-        birds: Flock.initBirds(32768),
+        birds: Flock.initBirds(33000),
         params: Flock.initParams(),
     };
 };
@@ -254,9 +254,8 @@ const main = function () {
 
     const fbx_loader = new FBXLoader();
     fbx_loader.load("models/Koi_Tri.fbx", function (fbx) {
-        console.log(fbx);
         const geometry = fbx.children[0].geometry;
-        mesh = new THREE.InstancedMesh(geometry, new THREE.MeshStandardMaterial({ color: 0xbababa, roughness: 0.1 }), 32768);
+        mesh = new THREE.InstancedMesh(geometry, new THREE.MeshStandardMaterial({ color: 0x666666, roughness: 0.1 }), 33000);
         let color = new THREE.Vector3();
         for (let i = 0; i < mesh.count; i++) {
             mesh.setColorAt(i, color.random());

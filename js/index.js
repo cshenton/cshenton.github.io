@@ -76,20 +76,20 @@ Flock.initBirds = function (length) {
 Flock.initGrid = function () {
     const lower = new THREE.Vector3(-0.5, -0.5, -0.5).multiplyScalar(1000.0);
     const upper = new THREE.Vector3(0.5, 0.5, 0.5).multiplyScalar(1000.0);
-    const size = new THREE.Vector3(0.1, 0.1, 0.1).multiplyScalar(1000.0);
+    const size = new THREE.Vector3(0.075, 0.075, 0.075).multiplyScalar(1000.0);
     return Grid.init(lower, upper, size, 8);
 }
 
 Flock.initParams = function () {
     return {
-        speed: 3.0,
+        speed: 1.0,
 
-        separationRadius: 50.0,
-        alignmentRadius: 100.0,
-        cohesionRadius: 100.0,
+        separationRadius: 25.0,
+        alignmentRadius: 50.0,
+        cohesionRadius: 50.0,
 
-        separationStrength: 2.0,
-        alignmentStrength: 1.0,
+        separationStrength: 4.0,
+        alignmentStrength: 6.0,
         cohesionStrength: 1.0,
     };
 }
@@ -168,7 +168,7 @@ Flock.move = function (birds, params) {
 Flock.init = function () {
     return {
         grid: Flock.initGrid(),
-        birds: Flock.initBirds(50000),
+        birds: Flock.initBirds(32768),
         params: Flock.initParams(),
     };
 };
@@ -183,14 +183,15 @@ Flock.update = function (flock) {
 const updateInstances = function (flock, instances) {
     let pos = new THREE.Vector3();
     let dir = new THREE.Vector3();
-    let scale = new THREE.Vector3(1, 1, 1);
+    let scale = new THREE.Vector3(1.25, 1.25, 1.25);
     let quat = new THREE.Quaternion();
     let mat = new THREE.Matrix4();
+    let vFrom = new THREE.Vector3(0, -1.0, 0);
 
     for (let i = 0; i < flock.birds.length; i++) {
         pos.fromArray(flock.birds.positions, 3 * i);
         dir.fromArray(flock.birds.directions, 3 * i);
-        quat.setFromAxisAngle(dir, Math.PI);
+        quat.setFromUnitVectors(vFrom, dir);
 
         mat.compose(pos, quat, scale);
         instances.setMatrixAt(i, mat);
@@ -252,7 +253,11 @@ const main = function () {
     loader.load("models/Koi_Tri.fbx", function (fbx) {
         console.log(fbx);
         const geometry = fbx.children[0].geometry;
-        mesh = new THREE.InstancedMesh(geometry, new THREE.MeshStandardMaterial({ color: 0xffff00 }), 50000);
+        mesh = new THREE.InstancedMesh(geometry, new THREE.MeshStandardMaterial({ color: 0xbababa }), 32768);
+        let color = new THREE.Vector3();
+        for (let i=0; i<mesh.count; i++) {
+            mesh.setColorAt(i, color.random());
+        }
         scene.add(mesh);
     });
 

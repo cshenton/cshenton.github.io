@@ -4,6 +4,9 @@ import { OrbitControls } from "./three/examples/jsm/controls/OrbitControls.js";
 import { FBXLoader } from "./three/examples/jsm/loaders/FBXLoader.js";
 
 
+const maxFishK = 100;
+
+
 let Grid = {};
 
 Grid.init = function (lower, upper, size, capacity) {
@@ -50,7 +53,7 @@ Grid.insert = function (grid, position, id) {
 
 let Flock = {};
 
-Flock.initBirds = function (length) {
+Flock.initFish = function (length) {
     const positions = new Float32Array(3 * length);
     const directions = new Float32Array(3 * length);
     const cells = new Int32Array(3 * length);
@@ -94,17 +97,17 @@ Flock.initParams = function () {
     };
 }
 
-Flock.index = function (grid, birds) {
+Flock.index = function (grid, fish, n) {
     Grid.reset(grid);
 
     let pos = new THREE.Vector3();
-    for (let i = 0; i < birds.length; i += 1) {
-        pos.fromArray(birds.positions, 3 * i);
-        birds.cells[i] = Grid.insert(grid, pos, i);
+    for (let i = 0; i < n; i += 1) {
+        pos.fromArray(fish.positions, 3 * i);
+        fish.cells[i] = Grid.insert(grid, pos, i);
     }
 };
 
-Flock.interact = function (grid, birds, params) {
+Flock.interact = function (grid, fish, params, n) {
     let pos_i = new THREE.Vector3();
     let pos_j = new THREE.Vector3();
     let dir_i = new THREE.Vector3();
@@ -113,11 +116,11 @@ Flock.interact = function (grid, birds, params) {
     let dir_ij = new THREE.Vector3();
     let vec = new THREE.Vector3();
 
-    for (let i = 0; i < birds.length; i++) {
-        pos_i.fromArray(birds.positions, 3 * i);
-        dir_i.fromArray(birds.directions, 3 * i);
+    for (let i = 0; i < n; i++) {
+        pos_i.fromArray(fish.positions, 3 * i);
+        dir_i.fromArray(fish.directions, 3 * i);
 
-        const cell = birds.cells[i];
+        const cell = fish.cells[i];
         const count = grid.counts[cell];
         const start = cell * grid.capacity;
         const end = cell * grid.capacity + count;
@@ -126,8 +129,8 @@ Flock.interact = function (grid, birds, params) {
             const j = grid.values[slot];
             if (i == j) continue;
 
-            pos_j.fromArray(birds.positions, 3 * j);
-            dir_j.fromArray(birds.directions, 3 * j);
+            pos_j.fromArray(fish.positions, 3 * j);
+            dir_j.fromArray(fish.directions, 3 * j);
 
             dir_ij.subVectors(pos_i, pos_j);
             const dist = dir_ij.length();
@@ -143,17 +146,17 @@ Flock.interact = function (grid, birds, params) {
         }
 
         dir_i.normalize();
-        dir_i.toArray(birds.directions, 3 * i);
+        dir_i.toArray(fish.directions, 3 * i);
     }
 };
 
-Flock.move = function (birds, params) {
+Flock.move = function (fish, params, n) {
     let pos = new THREE.Vector3();
     let dir = new THREE.Vector3();
 
-    for (let i = 0; i < birds.length; i++) {
-        pos.fromArray(birds.positions, 3 * i);
-        dir.fromArray(birds.directions, 3 * i);
+    for (let i = 0; i < n; i++) {
+        pos.fromArray(fish.positions, 3 * i);
+        dir.fromArray(fish.directions, 3 * i);
         dir.multiplyScalar(params.speed);
         pos.add(dir);
 
@@ -161,42 +164,43 @@ Flock.move = function (birds, params) {
         pos.y += 1000.0 * (pos.y < -500.0) - 1000.0 * (pos.y > 500.0);
         pos.z += 1000.0 * (pos.z < -500.0) - 1000.0 * (pos.z > 500.0);
 
-        pos.toArray(birds.positions, 3 * i);
+        pos.toArray(fish.positions, 3 * i);
     }
 };
 
 Flock.init = function () {
     return {
         grid: Flock.initGrid(),
-        birds: Flock.initBirds(33000),
+        fish: Flock.initFish(maxFishK * 1000),
         params: Flock.initParams(),
     };
 };
 
-Flock.update = function (flock) {
-    Flock.index(flock.grid, flock.birds);
-    Flock.interact(flock.grid, flock.birds, flock.params);
-    Flock.move(flock.birds, flock.params);
+Flock.update = function (flock, n) {
+    Flock.index(flock.grid, flock.fish, n);
+    Flock.interact(flock.grid, flock.fish, flock.params, n);
+    Flock.move(flock.fish, flock.params, n);
 };
 
 
-const updateInstances = function (flock, instances) {
+const updateInstances = function (flock, instances, n) {
     let pos = new THREE.Vector3();
     let dir = new THREE.Vector3();
     let scale = new THREE.Vector3(1.25, 1.25, 1.25);
     let quat = new THREE.Quaternion();
     let mat = new THREE.Matrix4();
     let vFrom = new THREE.Vector3(0, -1.0, 0);
-
-    for (let i = 0; i < flock.birds.length; i++) {
-        pos.fromArray(flock.birds.positions, 3 * i);
-        dir.fromArray(flock.birds.directions, 3 * i);
+    
+    for (let i = 0; i < n; i++) {
+        pos.fromArray(flock.fish.positions, 3 * i);
+        dir.fromArray(flock.fish.directions, 3 * i);
         quat.setFromUnitVectors(vFrom, dir);
-
+        
         mat.compose(pos, quat, scale);
         instances.setMatrixAt(i, mat);
     }
-
+    
+    instances.count = n;
     instances.instanceMatrix.needsUpdate = true;
 }
 
@@ -208,20 +212,28 @@ const main = function () {
         return;
     }
 
-    const fps_stats = Stats();
-    fps_stats.showPanel(0);
-    fps_stats.domElement.style.cssText = 'position:absolute;top:0px;left:0px;';
-    document.body.appendChild(fps_stats.dom);
+    const clock = new THREE.Clock();
 
-    const ms_stats = Stats();
-    ms_stats.showPanel(1);
-    ms_stats.domElement.style.cssText = 'position:absolute;top:0px;left:80px;';
-    document.body.appendChild(ms_stats.dom);
+    const fpsStats = Stats();
+    fpsStats.showPanel(0);
+    fpsStats.domElement.style.cssText = "position:absolute;top:0px;left:0px;";
+    document.body.appendChild(fpsStats.dom);
 
-    const mem_stats = Stats();
-    mem_stats.showPanel(2);
-    mem_stats.domElement.style.cssText = 'position:absolute;top:0px;left:160px;';
-    document.body.appendChild(mem_stats.dom);
+    const msStats = Stats();
+    msStats.showPanel(1);
+    msStats.domElement.style.cssText = "position:absolute;top:0px;left:80px;";
+    document.body.appendChild(msStats.dom);
+
+    const memStats = Stats();
+    memStats.showPanel(2);
+    memStats.domElement.style.cssText = "position:absolute;top:0px;left:160px;";
+    document.body.appendChild(memStats.dom);
+
+    const fishStats = new Stats();
+    fishStats.showPanel(3);
+    fishStats.domElement.style.cssText = "position:absolute;top:0px;left:240px;";
+    const fishPanel = fishStats.addPanel(new Stats.Panel("k fish", "#ff8", "#221"));
+    document.body.appendChild(fishStats.dom);
 
     const flock = Flock.init();
     Flock.update(flock);
@@ -264,11 +276,12 @@ const main = function () {
 
     let mesh;
     let running = true;
+    let kFish = 1;
 
     const fbx_loader = new FBXLoader();
     fbx_loader.load("models/Koi_Tri.fbx", function (fbx) {
         const geometry = fbx.children[0].geometry;
-        mesh = new THREE.InstancedMesh(geometry, new THREE.MeshStandardMaterial({ color: 0x666666, roughness: 0.1 }), 33000);
+        mesh = new THREE.InstancedMesh(geometry, new THREE.MeshStandardMaterial({ color: 0x666666, roughness: 0.1 }), maxFishK * 1000);
         mesh.castShadow = true;
         mesh.receiveShadow = true;
         let color = new THREE.Vector3();
@@ -301,18 +314,23 @@ const main = function () {
     });
 
     renderer.setAnimationLoop(function () {
-        fps_stats.begin();
-        ms_stats.begin();
-        mem_stats.begin();
-        
+        fpsStats.begin();
+        msStats.begin();
+        memStats.begin();
+        fishStats.begin();
+
         controls.update();
-        if (running) Flock.update(flock);
-        if (mesh) updateInstances(flock, mesh);
+        if (running) Flock.update(flock, kFish * 1000);
+        if (mesh) updateInstances(flock, mesh, kFish * 1000);
         renderer.render(scene, camera);
 
-        fps_stats.end();
-        ms_stats.end();
-        mem_stats.end();
+        fpsStats.end();
+        msStats.end();
+        memStats.end();
+        fishStats.end();
+
+        fishPanel.update(kFish, maxFishK);
+        if (clock.getDelta() < 0.016 && kFish < 100) kFish += 1;
     });
 };
 

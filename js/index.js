@@ -332,7 +332,7 @@ const main = function () {
         fishStats.end();
 
         fishPanel.update(kFish, maxFishK);
-        if (clock.getDelta() < 0.016 && kFish < 100) kFish += 1;
+        if (clock.getDelta() < 0.016 && kFish < maxFishK && running) kFish += 1;
     });
 };
 

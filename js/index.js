@@ -208,10 +208,23 @@ const main = function () {
         return;
     }
 
+    const fps_stats = Stats();
+    fps_stats.showPanel(0);
+    fps_stats.domElement.style.cssText = 'position:absolute;top:0px;left:0px;';
+    document.body.appendChild(fps_stats.dom);
+
+    const ms_stats = Stats();
+    ms_stats.showPanel(1);
+    ms_stats.domElement.style.cssText = 'position:absolute;top:0px;left:80px;';
+    document.body.appendChild(ms_stats.dom);
+
+    const mem_stats = Stats();
+    mem_stats.showPanel(2);
+    mem_stats.domElement.style.cssText = 'position:absolute;top:0px;left:160px;';
+    document.body.appendChild(mem_stats.dom);
+
     const flock = Flock.init();
     Flock.update(flock);
-
-    const clock = new THREE.Clock();
 
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0x00041c);
@@ -237,7 +250,7 @@ const main = function () {
     light.shadow.mapSize.width = 1024;
     light.shadow.mapSize.height = 1024;
 
-    const d = 300;
+    const d = 500;
     light.shadow.camera.left = - d;
     light.shadow.camera.right = d;
     light.shadow.camera.top = d;
@@ -256,6 +269,8 @@ const main = function () {
     fbx_loader.load("models/Koi_Tri.fbx", function (fbx) {
         const geometry = fbx.children[0].geometry;
         mesh = new THREE.InstancedMesh(geometry, new THREE.MeshStandardMaterial({ color: 0x666666, roughness: 0.1 }), 33000);
+        mesh.castShadow = true;
+        mesh.receiveShadow = true;
         let color = new THREE.Vector3();
         for (let i = 0; i < mesh.count; i++) {
             mesh.setColorAt(i, color.random());
@@ -286,10 +301,18 @@ const main = function () {
     });
 
     renderer.setAnimationLoop(function () {
+        fps_stats.begin();
+        ms_stats.begin();
+        mem_stats.begin();
+        
         controls.update();
         if (running) Flock.update(flock);
         if (mesh) updateInstances(flock, mesh);
         renderer.render(scene, camera);
+
+        fps_stats.end();
+        ms_stats.end();
+        mem_stats.end();
     });
 };
 

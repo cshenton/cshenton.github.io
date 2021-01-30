@@ -4,7 +4,7 @@ import { OrbitControls } from "./three/examples/jsm/controls/OrbitControls.js";
 import { FBXLoader } from "./three/examples/jsm/loaders/FBXLoader.js";
 
 
-const maxFishK = 100;
+const maxFishK = 50;
 
 
 let Grid = {};
@@ -214,26 +214,28 @@ const main = function () {
 
     const clock = new THREE.Clock();
 
-    const fpsStats = Stats();
-    fpsStats.showPanel(0);
-    fpsStats.domElement.style.cssText = "position:absolute;top:0px;left:0px;";
-    document.body.appendChild(fpsStats.dom);
-
-    const msStats = Stats();
-    msStats.showPanel(1);
-    msStats.domElement.style.cssText = "position:absolute;top:0px;left:80px;";
-    document.body.appendChild(msStats.dom);
-
-    const memStats = Stats();
-    memStats.showPanel(2);
-    memStats.domElement.style.cssText = "position:absolute;top:0px;left:160px;";
-    document.body.appendChild(memStats.dom);
 
     const fishStats = new Stats();
     fishStats.showPanel(3);
-    fishStats.domElement.style.cssText = "position:absolute;top:0px;left:240px;";
+    fishStats.domElement.style.cssText = "position:absolute;top:0px;left:0px;";
     const fishPanel = fishStats.addPanel(new Stats.Panel("k fish", "#ff8", "#221"));
     document.body.appendChild(fishStats.dom);
+
+    const fpsStats = new Stats();
+    fpsStats.showPanel(0);
+    fpsStats.domElement.style.cssText = "position:absolute;top:0px;left:80px;";
+    document.body.appendChild(fpsStats.dom);
+
+    const msStats = new Stats();
+    msStats.showPanel(1);
+    msStats.domElement.style.cssText = "position:absolute;top:0px;left:160px;";
+    document.body.appendChild(msStats.dom);
+
+    const memStats = new Stats();
+    memStats.showPanel(2);
+    memStats.domElement.style.cssText = "position:absolute;top:0px;left:240px;";
+    document.body.appendChild(memStats.dom);
+
 
     const flock = Flock.init();
     Flock.update(flock);
@@ -298,7 +300,7 @@ const main = function () {
         scene.background = rt;
 
         const gen = new THREE.PMREMGenerator(renderer);
-        mesh.material.envMap = gen.fromEquirectangular(texture).texture;
+        if (mesh) mesh.material.envMap = gen.fromEquirectangular(texture).texture;
     });
 
     window.addEventListener("resize", function () {

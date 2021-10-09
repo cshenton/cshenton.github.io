@@ -31,6 +31,9 @@ function main() {
     scene.background = new THREE.Color(0x00041c);
 
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 10000);
+    camera.position.x = -300;
+    camera.position.y = -400;
+    camera.position.z = -300;
 
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -57,10 +60,6 @@ function main() {
     light.shadow.camera.bottom = - d;
     light.shadow.camera.far = 1000;
     scene.add(light);
-
-    camera.position.x = -300;
-    camera.position.y = -400;
-    camera.position.z = -300;
 
     let running = true;
     let kFish = 1;
